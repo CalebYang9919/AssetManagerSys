@@ -1,0 +1,126 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+<script>
+    //时间
+    function getFDate(date) {
+        var d = eval('new ' + date.substr(1, date.length - 2));
+
+        var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+
+        for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+        return ar_date.join('-');
+    }
+    function dFormat(i) {
+        return i < 10 ? "0" + i.toString() : i;
+    }
+    //使用一个数据表格
+    layui.use('table', function () {
+        var table = layui.table, form = layui.form;
+        //数据表格实例
+        var Table = table.render({
+            elem: '#TableWarehous'
+          , height: 835
+           , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+               layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+           , groups: 2//只显示 2 个连续页码
+           , limit: 15 //每页显示15条数据
+           }
+          , id: 'idTest'
+          , toolbar: '#toolbarDemo'
+          , url: '/Warehous/TableLoading' //数据接口
+          , response:
+              {
+                  statusName: 'status' //规定数据状态的字段名称，默认：code
+                , statusCode: 200 //规定成功的状态码，默认：0
+                , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+              }
+          , request:
+              {
+                  pageName: 'curr' //页码的参数名称，默认：page
+                , limitName: 'nums' //每页数据量的参数名，默认：limit
+              }
+          , cols: [[ //表头
+              { field: 'ware_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+            , { field: 'ware_no', title: '资产编码', width: 200, align: 'center', unresize: true }
+            , { field: 'ware_name', title: '资产名称', width: 200, align: 'center', unresize: true }
+            , { field: 'ware_class', title: '资产类别', width: 200, align: 'center', unresize: true }
+            , { field: 'ware_sup', title: '供应商', width: 200, align: 'center', unresize: true }
+            , { field: 'ware_brand', title: '品牌', width: 200, align: 'center', unresize: true }
+            , { field: 'ware_addtime', title: '入库日期', width: 200, align: 'center', unresize: true, templet: function (d) { return getFDate(d.ware_addtime) } }
+            , { field: 'ware_place', title: '存放地点', width: 230, align: 'center', unresize: true }
+            , { title: '操作', toolbar: '#barDemo', width: 170, align: 'center', unresize: true }
+          ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //入库登记事件
+                case 'Add':
+                    location.href = "WarehousReg";
+                    break;
+                //查询事件
+                case 'Select':
+                    var nameno = $("#WarehousNameNo").val();
+                    Table.reload({
+                        url: '/Warehous/TableLoadingByName',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            nameno: $("#WarehousNameNo").val()
+                        }
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var $ = layui.jquery, layer = layui.layer, data = obj.data;
+            //修改事件
+            if (obj.event === 'edit') {
+                sessionStorage["name"] = data.ware_name;
+                sessionStorage["no"] = data.ware_no;
+                sessionStorage["class"] = data.AsClass_id;
+                sessionStorage["sup"] = data.sup_id;
+                sessionStorage["brand"] = data.brand_id;
+                sessionStorage["addtime"] = data.ware_addtime;
+                sessionStorage["place"] = data.place_id;
+                sessionStorage["id"] = data.ware_id;
+
+                location.href = "WarehousUpdate";
+            }
+        });
+    });
+</script>
+
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">资产入库</span>
+    </div>
+
+    <table id="TableWarehous" lay-filter="test"></table>
+
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-inline">
+            <div class="layui-input-inline" style="width: 150px;">
+                <input id="WarehousNameNo" type="text" name="WarehousNameNo" lay-verify="name" autocomplete="off"
+                       placeholder="资产编码/名称" class="layui-input" style="width: 250px;">
+            </div>
+        </div>
+        <div class="layui-inline" style="margin-left:100px">
+            <button type="button" class="layui-btn" lay-event="Select"><i class="layui-icon layui-icon-search"></i></button>
+        </div>
+        <div class="layui-btn-container layui-inline">
+            <button class="layui-btn layui-btn-sm" lay-event="Add" style="margin-left: 1170px;">入库登记</button>
+        </div>
+    </script>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+    </script>
+</div>

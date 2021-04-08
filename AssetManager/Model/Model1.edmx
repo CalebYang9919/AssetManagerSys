@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AssetManage_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminPersonalInfo">
+          <Key>
+            <PropertyRef Name="Personal_id" />
+          </Key>
+          <Property Name="Personal_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Personal_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personal_depart" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personal_position" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personal_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Personal_iphone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Personal_sex" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssetsClass">
+          <Key>
+            <PropertyRef Name="AsClass_id" />
+          </Key>
+          <Property Name="AsClass_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AsClass_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AsClass_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AsClass_state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BorrowAndReturn">
+          <Key>
+            <PropertyRef Name="bandr_id" />
+          </Key>
+          <Property Name="bandr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="bandr_borrowno" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bandr_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bandr_borrowtime" Type="date" Nullable="false" />
+          <Property Name="bandr_depart" Type="int" Nullable="false" />
+          <Property Name="bandr_reason" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="bandr_returntime" Type="date" />
+          <Property Name="bandr_wareid" Type="int" Nullable="false" />
+          <Property Name="bandr_remark" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="brand_id" />
+          </Key>
+          <Property Name="brand_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brand_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="brand_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="brand_state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="depart_id" />
+          </Key>
+          <Property Name="depart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="depart_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="depart_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scrap">
+          <Key>
+            <PropertyRef Name="scr_id" />
+          </Key>
+          <Property Name="scr_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="scr_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="scr_time" Type="date" Nullable="false" />
+          <Property Name="scr_type" Type="int" Nullable="false" />
+          <Property Name="scr_reason" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="scr_wareid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScrapType">
+          <Key>
+            <PropertyRef Name="scrap_id" />
+          </Key>
+          <Property Name="scrap_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="scrap_no" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="scrap_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="scrap_state" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StoragePlace">
+          <Key>
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="place_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="place_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="place_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="place_state" Type="int" Nullable="false" />
+          <Property Name="place_remark" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sup_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sup_type" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sup_state" Type="int" Nullable="false" />
+          <Property Name="sup_iphone" Type="nvarchar" MaxLength="50" />
+          <Property Name="sup_contact" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sup_address" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="UserPrivileg">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="user_pwd" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="power" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Warehous">
+          <Key>
+            <PropertyRef Name="ware_id" />
+          </Key>
+          <Property Name="ware_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ware_no" Type="nvarchar" MaxLength="50" />
+          <Property Name="ware_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ware_class" Type="int" Nullable="false" />
+          <Property Name="ware_sup" Type="int" Nullable="false" />
+          <Property Name="ware_brand" Type="int" Nullable="false" />
+          <Property Name="ware_addtime" Type="datetime" />
+          <Property Name="ware_place" Type="int" Nullable="false" />
+          <Property Name="ware_brstate" Type="int" Nullable="false" />
+          <Property Name="ware_scrstate" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AdminPersonalInfo_UserPrivileg">
+          <End Role="UserPrivileg" Type="Self.UserPrivileg" Multiplicity="1" />
+          <End Role="AdminPersonalInfo" Type="Self.AdminPersonalInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPrivileg">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="AdminPersonalInfo">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowAndReturn_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="BorrowAndReturn" Type="Self.BorrowAndReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="depart_id" />
+            </Principal>
+            <Dependent Role="BorrowAndReturn">
+              <PropertyRef Name="bandr_depart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowAndReturn_Warehous">
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="1" />
+          <End Role="BorrowAndReturn" Type="Self.BorrowAndReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehous">
+              <PropertyRef Name="ware_id" />
+            </Principal>
+            <Dependent Role="BorrowAndReturn">
+              <PropertyRef Name="bandr_wareid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scrap_ScrapType">
+          <End Role="ScrapType" Type="Self.ScrapType" Multiplicity="1" />
+          <End Role="Scrap" Type="Self.Scrap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScrapType">
+              <PropertyRef Name="scrap_id" />
+            </Principal>
+            <Dependent Role="Scrap">
+              <PropertyRef Name="scr_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scrap_Warehous">
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="1" />
+          <End Role="Scrap" Type="Self.Scrap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehous">
+              <PropertyRef Name="ware_id" />
+            </Principal>
+            <Dependent Role="Scrap">
+              <PropertyRef Name="scr_wareid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_AssetsClass">
+          <End Role="AssetsClass" Type="Self.AssetsClass" Multiplicity="1" />
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsClass">
+              <PropertyRef Name="AsClass_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_Brand">
+          <End Role="Brand" Type="Self.Brand" Multiplicity="1" />
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="brand_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_StoragePlace">
+          <End Role="StoragePlace" Type="Self.StoragePlace" Multiplicity="1" />
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoragePlace">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_place" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="Warehous" Type="Self.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="sup_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_sup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AssetManage_DBModelStoreContainer">
+          <EntitySet Name="AdminPersonalInfo" EntityType="Self.AdminPersonalInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AssetsClass" EntityType="Self.AssetsClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BorrowAndReturn" EntityType="Self.BorrowAndReturn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Brand" EntityType="Self.Brand" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scrap" EntityType="Self.Scrap" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScrapType" EntityType="Self.ScrapType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StoragePlace" EntityType="Self.StoragePlace" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPrivileg" EntityType="Self.UserPrivileg" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehous" EntityType="Self.Warehous" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AdminPersonalInfo_UserPrivileg" Association="Self.FK_AdminPersonalInfo_UserPrivileg">
+            <End Role="UserPrivileg" EntitySet="UserPrivileg" />
+            <End Role="AdminPersonalInfo" EntitySet="AdminPersonalInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowAndReturn_Department" Association="Self.FK_BorrowAndReturn_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="BorrowAndReturn" EntitySet="BorrowAndReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowAndReturn_Warehous" Association="Self.FK_BorrowAndReturn_Warehous">
+            <End Role="Warehous" EntitySet="Warehous" />
+            <End Role="BorrowAndReturn" EntitySet="BorrowAndReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scrap_ScrapType" Association="Self.FK_Scrap_ScrapType">
+            <End Role="ScrapType" EntitySet="ScrapType" />
+            <End Role="Scrap" EntitySet="Scrap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scrap_Warehous" Association="Self.FK_Scrap_Warehous">
+            <End Role="Warehous" EntitySet="Warehous" />
+            <End Role="Scrap" EntitySet="Scrap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_AssetsClass" Association="Self.FK_Warehous_AssetsClass">
+            <End Role="AssetsClass" EntitySet="AssetsClass" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_Brand" Association="Self.FK_Warehous_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_StoragePlace" Association="Self.FK_Warehous_StoragePlace">
+            <End Role="StoragePlace" EntitySet="StoragePlace" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_Supplier" Association="Self.FK_Warehous_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AssetManage_DBModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="AssetManage_DBEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminPersonalInfo" EntityType="AssetManage_DBModel.AdminPersonalInfo" />
+          <EntitySet Name="AssetsClass" EntityType="AssetManage_DBModel.AssetsClass" />
+          <EntitySet Name="BorrowAndReturn" EntityType="AssetManage_DBModel.BorrowAndReturn" />
+          <EntitySet Name="Brand" EntityType="AssetManage_DBModel.Brand" />
+          <EntitySet Name="Department" EntityType="AssetManage_DBModel.Department" />
+          <EntitySet Name="Scrap" EntityType="AssetManage_DBModel.Scrap" />
+          <EntitySet Name="ScrapType" EntityType="AssetManage_DBModel.ScrapType" />
+          <EntitySet Name="StoragePlace" EntityType="AssetManage_DBModel.StoragePlace" />
+          <EntitySet Name="Supplier" EntityType="AssetManage_DBModel.Supplier" />
+          <EntitySet Name="sysdiagrams" EntityType="AssetManage_DBModel.sysdiagrams" />
+          <EntitySet Name="UserPrivileg" EntityType="AssetManage_DBModel.UserPrivileg" />
+          <EntitySet Name="Warehous" EntityType="AssetManage_DBModel.Warehous" />
+          <AssociationSet Name="FK_AdminPersonalInfo_UserPrivileg" Association="AssetManage_DBModel.FK_AdminPersonalInfo_UserPrivileg">
+            <End Role="UserPrivileg" EntitySet="UserPrivileg" />
+            <End Role="AdminPersonalInfo" EntitySet="AdminPersonalInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_AssetsClass" Association="AssetManage_DBModel.FK_Warehous_AssetsClass">
+            <End Role="AssetsClass" EntitySet="AssetsClass" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowAndReturn_Department" Association="AssetManage_DBModel.FK_BorrowAndReturn_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="BorrowAndReturn" EntitySet="BorrowAndReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BorrowAndReturn_Warehous" Association="AssetManage_DBModel.FK_BorrowAndReturn_Warehous">
+            <End Role="Warehous" EntitySet="Warehous" />
+            <End Role="BorrowAndReturn" EntitySet="BorrowAndReturn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_Brand" Association="AssetManage_DBModel.FK_Warehous_Brand">
+            <End Role="Brand" EntitySet="Brand" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scrap_ScrapType" Association="AssetManage_DBModel.FK_Scrap_ScrapType">
+            <End Role="ScrapType" EntitySet="ScrapType" />
+            <End Role="Scrap" EntitySet="Scrap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Scrap_Warehous" Association="AssetManage_DBModel.FK_Scrap_Warehous">
+            <End Role="Warehous" EntitySet="Warehous" />
+            <End Role="Scrap" EntitySet="Scrap" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_StoragePlace" Association="AssetManage_DBModel.FK_Warehous_StoragePlace">
+            <End Role="StoragePlace" EntitySet="StoragePlace" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Warehous_Supplier" Association="AssetManage_DBModel.FK_Warehous_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="Warehous" EntitySet="Warehous" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AdminPersonalInfo">
+          <Key>
+            <PropertyRef Name="Personal_id" />
+          </Key>
+          <Property Name="Personal_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Personal_no" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Personal_depart" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Personal_position" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Personal_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Personal_iphone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Personal_sex" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="UserPrivileg" Relationship="AssetManage_DBModel.FK_AdminPersonalInfo_UserPrivileg" FromRole="AdminPersonalInfo" ToRole="UserPrivileg" />
+        </EntityType>
+        <EntityType Name="AssetsClass">
+          <Key>
+            <PropertyRef Name="AsClass_id" />
+          </Key>
+          <Property Name="AsClass_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="AsClass_no" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="AsClass_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="AsClass_state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_Warehous_AssetsClass" FromRole="AssetsClass" ToRole="Warehous" />
+        </EntityType>
+        <EntityType Name="BorrowAndReturn">
+          <Key>
+            <PropertyRef Name="bandr_id" />
+          </Key>
+          <Property Name="bandr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="bandr_borrowno" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="bandr_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="bandr_borrowtime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="bandr_depart" Type="Int32" Nullable="false" />
+          <Property Name="bandr_reason" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="bandr_returntime" Type="DateTime" Precision="0" />
+          <Property Name="bandr_wareid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="AssetManage_DBModel.FK_BorrowAndReturn_Department" FromRole="BorrowAndReturn" ToRole="Department" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_BorrowAndReturn_Warehous" FromRole="BorrowAndReturn" ToRole="Warehous" />
+          <Property Name="bandr_remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Brand">
+          <Key>
+            <PropertyRef Name="brand_id" />
+          </Key>
+          <Property Name="brand_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="brand_no" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="brand_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="brand_state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_Warehous_Brand" FromRole="Brand" ToRole="Warehous" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="depart_id" />
+          </Key>
+          <Property Name="depart_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="depart_no" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="depart_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="BorrowAndReturn" Relationship="AssetManage_DBModel.FK_BorrowAndReturn_Department" FromRole="Department" ToRole="BorrowAndReturn" />
+        </EntityType>
+        <EntityType Name="Scrap">
+          <Key>
+            <PropertyRef Name="scr_id" />
+          </Key>
+          <Property Name="scr_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="scr_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="scr_time" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="scr_type" Type="Int32" Nullable="false" />
+          <Property Name="scr_reason" Type="String" Nullable="false" MaxLength="200" Unicode="true" FixedLength="false" />
+          <Property Name="scr_wareid" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ScrapType" Relationship="AssetManage_DBModel.FK_Scrap_ScrapType" FromRole="Scrap" ToRole="ScrapType" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_Scrap_Warehous" FromRole="Scrap" ToRole="Warehous" />
+        </EntityType>
+        <EntityType Name="ScrapType">
+          <Key>
+            <PropertyRef Name="scrap_id" />
+          </Key>
+          <Property Name="scrap_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="scrap_no" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="scrap_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="scrap_state" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Scrap" Relationship="AssetManage_DBModel.FK_Scrap_ScrapType" FromRole="ScrapType" ToRole="Scrap" />
+        </EntityType>
+        <EntityType Name="StoragePlace">
+          <Key>
+            <PropertyRef Name="place_id" />
+          </Key>
+          <Property Name="place_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="place_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="place_type" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="place_state" Type="Int32" Nullable="false" />
+          <Property Name="place_remark" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_Warehous_StoragePlace" FromRole="StoragePlace" ToRole="Warehous" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="sup_id" />
+          </Key>
+          <Property Name="sup_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="sup_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="sup_type" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="sup_state" Type="Int32" Nullable="false" />
+          <Property Name="sup_iphone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="sup_contact" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="sup_address" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Warehous" Relationship="AssetManage_DBModel.FK_Warehous_Supplier" FromRole="Supplier" ToRole="Warehous" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="UserPrivileg">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="user_pwd" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="power" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdminPersonalInfo" Relationship="AssetManage_DBModel.FK_AdminPersonalInfo_UserPrivileg" FromRole="UserPrivileg" ToRole="AdminPersonalInfo" />
+        </EntityType>
+        <EntityType Name="Warehous">
+          <Key>
+            <PropertyRef Name="ware_id" />
+          </Key>
+          <Property Name="ware_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ware_no" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ware_name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ware_class" Type="Int32" Nullable="false" />
+          <Property Name="ware_sup" Type="Int32" Nullable="false" />
+          <Property Name="ware_brand" Type="Int32" Nullable="false" />
+          <Property Name="ware_addtime" Type="DateTime" Precision="3" />
+          <Property Name="ware_place" Type="Int32" Nullable="false" />
+          <Property Name="ware_brstate" Type="Int32" Nullable="false" />
+          <Property Name="ware_scrstate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AssetsClass" Relationship="AssetManage_DBModel.FK_Warehous_AssetsClass" FromRole="Warehous" ToRole="AssetsClass" />
+          <NavigationProperty Name="BorrowAndReturn" Relationship="AssetManage_DBModel.FK_BorrowAndReturn_Warehous" FromRole="Warehous" ToRole="BorrowAndReturn" />
+          <NavigationProperty Name="Brand" Relationship="AssetManage_DBModel.FK_Warehous_Brand" FromRole="Warehous" ToRole="Brand" />
+          <NavigationProperty Name="Scrap" Relationship="AssetManage_DBModel.FK_Scrap_Warehous" FromRole="Warehous" ToRole="Scrap" />
+          <NavigationProperty Name="StoragePlace" Relationship="AssetManage_DBModel.FK_Warehous_StoragePlace" FromRole="Warehous" ToRole="StoragePlace" />
+          <NavigationProperty Name="Supplier" Relationship="AssetManage_DBModel.FK_Warehous_Supplier" FromRole="Warehous" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_AdminPersonalInfo_UserPrivileg">
+          <End Role="UserPrivileg" Type="AssetManage_DBModel.UserPrivileg" Multiplicity="1" />
+          <End Role="AdminPersonalInfo" Type="AssetManage_DBModel.AdminPersonalInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserPrivileg">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="AdminPersonalInfo">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_AssetsClass">
+          <End Role="AssetsClass" Type="AssetManage_DBModel.AssetsClass" Multiplicity="1" />
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssetsClass">
+              <PropertyRef Name="AsClass_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowAndReturn_Department">
+          <End Role="Department" Type="AssetManage_DBModel.Department" Multiplicity="1" />
+          <End Role="BorrowAndReturn" Type="AssetManage_DBModel.BorrowAndReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="depart_id" />
+            </Principal>
+            <Dependent Role="BorrowAndReturn">
+              <PropertyRef Name="bandr_depart" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BorrowAndReturn_Warehous">
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="1" />
+          <End Role="BorrowAndReturn" Type="AssetManage_DBModel.BorrowAndReturn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehous">
+              <PropertyRef Name="ware_id" />
+            </Principal>
+            <Dependent Role="BorrowAndReturn">
+              <PropertyRef Name="bandr_wareid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_Brand">
+          <End Role="Brand" Type="AssetManage_DBModel.Brand" Multiplicity="1" />
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Brand">
+              <PropertyRef Name="brand_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_brand" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scrap_ScrapType">
+          <End Role="ScrapType" Type="AssetManage_DBModel.ScrapType" Multiplicity="1" />
+          <End Role="Scrap" Type="AssetManage_DBModel.Scrap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScrapType">
+              <PropertyRef Name="scrap_id" />
+            </Principal>
+            <Dependent Role="Scrap">
+              <PropertyRef Name="scr_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Scrap_Warehous">
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="1" />
+          <End Role="Scrap" Type="AssetManage_DBModel.Scrap" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehous">
+              <PropertyRef Name="ware_id" />
+            </Principal>
+            <Dependent Role="Scrap">
+              <PropertyRef Name="scr_wareid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_StoragePlace">
+          <End Role="StoragePlace" Type="AssetManage_DBModel.StoragePlace" Multiplicity="1" />
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StoragePlace">
+              <PropertyRef Name="place_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_place" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehous_Supplier">
+          <End Role="Supplier" Type="AssetManage_DBModel.Supplier" Multiplicity="1" />
+          <End Role="Warehous" Type="AssetManage_DBModel.Warehous" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="sup_id" />
+            </Principal>
+            <Dependent Role="Warehous">
+              <PropertyRef Name="ware_sup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AssetManage_DBModelStoreContainer" CdmEntityContainer="AssetManage_DBEntities">
+          <EntitySetMapping Name="AdminPersonalInfo">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.AdminPersonalInfo">
+              <MappingFragment StoreEntitySet="AdminPersonalInfo">
+                <ScalarProperty Name="Personal_id" ColumnName="Personal_id" />
+                <ScalarProperty Name="Personal_no" ColumnName="Personal_no" />
+                <ScalarProperty Name="Personal_depart" ColumnName="Personal_depart" />
+                <ScalarProperty Name="Personal_position" ColumnName="Personal_position" />
+                <ScalarProperty Name="Personal_name" ColumnName="Personal_name" />
+                <ScalarProperty Name="Personal_iphone" ColumnName="Personal_iphone" />
+                <ScalarProperty Name="Personal_sex" ColumnName="Personal_sex" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AssetsClass">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.AssetsClass">
+              <MappingFragment StoreEntitySet="AssetsClass">
+                <ScalarProperty Name="AsClass_id" ColumnName="AsClass_id" />
+                <ScalarProperty Name="AsClass_no" ColumnName="AsClass_no" />
+                <ScalarProperty Name="AsClass_name" ColumnName="AsClass_name" />
+                <ScalarProperty Name="AsClass_state" ColumnName="AsClass_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorrowAndReturn">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.BorrowAndReturn">
+              <MappingFragment StoreEntitySet="BorrowAndReturn">
+                <ScalarProperty Name="bandr_remark" ColumnName="bandr_remark" />
+                <ScalarProperty Name="bandr_id" ColumnName="bandr_id" />
+                <ScalarProperty Name="bandr_borrowno" ColumnName="bandr_borrowno" />
+                <ScalarProperty Name="bandr_name" ColumnName="bandr_name" />
+                <ScalarProperty Name="bandr_borrowtime" ColumnName="bandr_borrowtime" />
+                <ScalarProperty Name="bandr_depart" ColumnName="bandr_depart" />
+                <ScalarProperty Name="bandr_reason" ColumnName="bandr_reason" />
+                <ScalarProperty Name="bandr_returntime" ColumnName="bandr_returntime" />
+                <ScalarProperty Name="bandr_wareid" ColumnName="bandr_wareid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Brand">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.Brand">
+              <MappingFragment StoreEntitySet="Brand">
+                <ScalarProperty Name="brand_id" ColumnName="brand_id" />
+                <ScalarProperty Name="brand_no" ColumnName="brand_no" />
+                <ScalarProperty Name="brand_name" ColumnName="brand_name" />
+                <ScalarProperty Name="brand_state" ColumnName="brand_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="depart_id" ColumnName="depart_id" />
+                <ScalarProperty Name="depart_no" ColumnName="depart_no" />
+                <ScalarProperty Name="depart_name" ColumnName="depart_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scrap">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.Scrap">
+              <MappingFragment StoreEntitySet="Scrap">
+                <ScalarProperty Name="scr_id" ColumnName="scr_id" />
+                <ScalarProperty Name="scr_name" ColumnName="scr_name" />
+                <ScalarProperty Name="scr_time" ColumnName="scr_time" />
+                <ScalarProperty Name="scr_type" ColumnName="scr_type" />
+                <ScalarProperty Name="scr_reason" ColumnName="scr_reason" />
+                <ScalarProperty Name="scr_wareid" ColumnName="scr_wareid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScrapType">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.ScrapType">
+              <MappingFragment StoreEntitySet="ScrapType">
+                <ScalarProperty Name="scrap_id" ColumnName="scrap_id" />
+                <ScalarProperty Name="scrap_no" ColumnName="scrap_no" />
+                <ScalarProperty Name="scrap_name" ColumnName="scrap_name" />
+                <ScalarProperty Name="scrap_state" ColumnName="scrap_state" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StoragePlace">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.StoragePlace">
+              <MappingFragment StoreEntitySet="StoragePlace">
+                <ScalarProperty Name="place_id" ColumnName="place_id" />
+                <ScalarProperty Name="place_name" ColumnName="place_name" />
+                <ScalarProperty Name="place_type" ColumnName="place_type" />
+                <ScalarProperty Name="place_state" ColumnName="place_state" />
+                <ScalarProperty Name="place_remark" ColumnName="place_remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Supplier">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="sup_id" ColumnName="sup_id" />
+                <ScalarProperty Name="sup_name" ColumnName="sup_name" />
+                <ScalarProperty Name="sup_type" ColumnName="sup_type" />
+                <ScalarProperty Name="sup_state" ColumnName="sup_state" />
+                <ScalarProperty Name="sup_iphone" ColumnName="sup_iphone" />
+                <ScalarProperty Name="sup_contact" ColumnName="sup_contact" />
+                <ScalarProperty Name="sup_address" ColumnName="sup_address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPrivileg">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.UserPrivileg">
+              <MappingFragment StoreEntitySet="UserPrivileg">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_pwd" ColumnName="user_pwd" />
+                <ScalarProperty Name="power" ColumnName="power" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehous">
+            <EntityTypeMapping TypeName="AssetManage_DBModel.Warehous">
+              <MappingFragment StoreEntitySet="Warehous">
+                <ScalarProperty Name="ware_id" ColumnName="ware_id" />
+                <ScalarProperty Name="ware_no" ColumnName="ware_no" />
+                <ScalarProperty Name="ware_name" ColumnName="ware_name" />
+                <ScalarProperty Name="ware_class" ColumnName="ware_class" />
+                <ScalarProperty Name="ware_sup" ColumnName="ware_sup" />
+                <ScalarProperty Name="ware_brand" ColumnName="ware_brand" />
+                <ScalarProperty Name="ware_addtime" ColumnName="ware_addtime" />
+                <ScalarProperty Name="ware_place" ColumnName="ware_place" />
+                <ScalarProperty Name="ware_brstate" ColumnName="ware_brstate" />
+                <ScalarProperty Name="ware_scrstate" ColumnName="ware_scrstate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

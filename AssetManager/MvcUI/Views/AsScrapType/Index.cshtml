@@ -1,0 +1,53 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //使用一个数据表格
+    layui.use('table', function () {
+        var table = layui.table, form = layui.form;
+        //数据表格实例
+        table.render({
+            elem: '#TableScrapType'
+          , height: 835
+           , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+               layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+           , groups: 2//只显示 2 个连续页码
+           , limit: 15 //每页显示15条数据
+           }
+          , id: 'idTest'
+          , toolbar: '#toolbarDemo'
+          , url: '/AsScrapType/TableLoading' //数据接口
+          , response:
+              {
+                  statusName: 'status' //规定数据状态的字段名称，默认：code
+                , statusCode: 200 //规定成功的状态码，默认：0
+                , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+              }
+          , request:
+              {
+                  pageName: 'curr' //页码的参数名称，默认：page
+                , limitName: 'nums' //每页数据量的参数名，默认：limit
+              }
+          , cols: [[ //表头
+              { field: 'scrap_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+            , { field: 'scrap_no', title: '报废方式编码', width: 650, align: 'center', unresize: true }
+            , { field: 'scrap_name', title: '报废方式名称', width: 650, align: 'center', unresize: true }
+            , { field: 'scrap_state', title: '状态', width: 200, align: 'center', templet: '#switchTpl', unresize: true }
+          ]]
+        });
+    });
+</script>
+
+<body>
+    <div id="main">
+        <div class="title">
+            <span id="Place">当前位置：</span><span id="PersonInfoValues">报废方式</span>
+        </div>
+
+        <table id="TableScrapType" lay-filter="test"></table>
+    </div>
+</body>

@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>球博资产管理系统</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/themes/css")
+    @Scripts.Render("~/bundles/js")
+    @Styles.Render("~/Content/themes/css/layui")
+    @Scripts.Render("~/bundles/layui")
+</head>
+<body style="margin:0 auto">
+    <div id="container">
+        <div id="hd">
+            <div class="hd-top">
+                <h1 class="logo" style="font-size:20px;color:white;margin-top:5px;">球博资产管理系统</h1>
+                <div style="position:absolute;left:200px;top:20px;color:white;">
+                    <span>
+                        欢迎您:@Session["Power"]
+                    </span>
+                    <span>@Session["user_name"]</span>
+                </div>
+                @*<div><label style="font:bold 14px ar">超级管理员&nbsp;欢迎您：</label><span></span></div>*@
+                <div class="setting ue-clear">
+                    <div class="setting-skin">
+                        <div class="switch-bar">
+                            <i class="skin-icon"></i>
+                            <span class="text">修改密码</span>
+                        </div>
+                    </div>
+                    <ul class="setting-main ue-clear">
+                        <li><a href="javascript:;" class="close-btn exit"></a></li>
+                    </ul>
+
+                </div>
+            </div>
+            @RenderBody()
+            <div id="ft" class="ue-clear">
+                <div class="ft1 ue-clear">
+                    <i class="ft-icon1"></i> <span>球博资产管理系统&nbsp;BY<a href="http://www.cssmoban.com/" target="_blank" title="联系我们">联系我们</a>&nbsp;</span>
+                    <em>湖南保护摸黑箱工作室</em>
+                </div>
+                <div class="ft2 ue-clear">
+                    <span>版本号：</span>
+                    <em>V1.0 2019</em>
+                    <i class="ft-icon2"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="exitDialog">
+        <div class="content">
+            <div class="ui-dialog-icon"></div>
+            <div class="ui-dialog-text">
+                <p class="dialog-content">你确定要退出系统？</p>
+                <p class="tips">如果是请点击“确定”，否则点“取消”</p>
+
+                <div class="buttons">
+                    <input type="button" class="button long2 ok" value="确定" />
+                    <input type="button" class="button long2 normal" value="取消" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="PwdDialog">
+        <div class="content">
+            <br />
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="impInfo">*</span>当前密码：</label>
+                <div class="layui-input-block">
+                    <input style="width: 270px" id="ScrapType" type="password" name="ScrapTypeName" required
+                           lay-verify="required" autocomplete="off" placeholder="当前密码" class="layui-input" />
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="impInfo">*</span>新密码：</label>
+                <div class="layui-input-block">
+                    <input style="width: 270px" id="ScrapTypeNo" type="password" name="ScrapTypeNo" required
+                           lay-verify="required" autocomplete="off" placeholder="新密码" class="layui-input" />
+                    <p id="tips">(6到20位，英文字母或数字，不能为连续或相同数字，不能为连续或相同英文字母)</p>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"><span class="impInfo">*</span>确认密码：</label>
+                <div class="layui-input-block">
+                    <input style="width: 270px" id="resultpwd" type="password" name="ScrapTypeNo" required
+                           lay-verify="required" autocomplete="off" placeholder="确认密码" class="layui-input" />
+                </div>
+            </div>
+            <div class="layui-form-item" style="text-align: center;">
+                <div class="buttons">
+                    <input type="button" class="button long2 ok" value="保存"/>
+                    <input type="button" class="button long2 normal" value="取消" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    //退出系统
+    $('.exitDialog').Dialog({
+        title: '提示信息',
+        autoOpen: false,
+        width: 400,
+        height: 200
+    });
+
+    $('.exit').click(function () {
+        $('.exitDialog').Dialog('open');
+    });
+
+    $('.exitDialog input[type=button]').click(function (e) {
+        $('.exitDialog').Dialog('close');
+
+        if ($(this).hasClass('ok')) {
+            window.location.href = "/Account/Login";
+        }
+    });
+
+    //修改密码
+    $('.PwdDialog').Dialog({
+        title: '修改密码',
+        autoOpen: false,
+        width: 450,
+        height: 300
+    });
+
+    $('.text').click(function () {
+        $('.PwdDialog').Dialog('open');
+        $("#ScrapType").val("");
+        $("#ScrapTypeNo").val("");
+        $("#resultpwd").val("")
+    });
+
+    $('.PwdDialog input[type=button]').click(function (e) {
+        $('.PwdDialog').Dialog('close');
+        if ($(this).hasClass('ok')) {
+            //修改密码
+            $.ajax({
+                url: '/Home/XGMM',
+                type: 'post',
+                dataType: 'json',
+                data: { pwd: $("#ScrapType").val(), newpwd: $("#ScrapTypeNo").val(), resultpwd: $("#resultpwd").val() },
+                success: function (data) {
+                    alert(data);
+                    $('.PwdDialog').Dialog('close');
+                },
+                error: function (data) {
+                    alert(data)
+                }
+            });
+        }
+    });
+
+
+</script>
+</html>

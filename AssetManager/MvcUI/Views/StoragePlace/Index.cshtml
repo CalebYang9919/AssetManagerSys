@@ -1,0 +1,489 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //详情页
+    function show(id) {
+        $.ajax({
+            url: '/StoragePlace/SelectInfoById',
+            type: 'post',
+            dataType: 'json',
+            data: { id: id },
+            success: function (data) {
+                $("#StoragePlaceInfo").html(data.place_name);//传值
+                $("#StoragePlaceTypeInfo").html(data.place_type);
+                $("#StoragePlaceStateInfo").html(data.place_state);
+                $("#StoragePlaceRemarkInfo").html(data.place_remark);
+                layer.open({
+                    type: 1
+                            , area: ['450px', '340px']
+                            , content: $("#type-detail")
+                            , title: '资产存放地点详情'
+                            , btn: ['关闭']
+                            , btn2: function (index, layero) {
+                                //按钮【取消】的回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                            , cancel: function () {
+                                //右上角关闭回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                });
+            },
+            error: function (data) {
+                alert(0);
+            }
+        });
+
+    };
+    //使用一个数据表格
+    layui.use('table', function () {
+        var table = layui.table, form = layui.form;
+
+        //数据表格实例
+        var Table = table.render({
+            elem: '#TableStoragePlace'
+            , height: 835
+             , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                 layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+             , groups: 2//只显示 2 个连续页码
+             , limit: 15 //每页显示15条数据
+             }
+            , id: 'idTest'
+            , toolbar: '#toolbarDemo'
+            , url: '/StoragePlace/TableLoading' //数据接口
+            , response:
+                {
+                    statusName: 'status' //规定数据状态的字段名称，默认：code
+                  , statusCode: 200 //规定成功的状态码，默认：0
+                  , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                  , countName: 'total' //规定数据总数的字段名称，默认：count
+                  , dataName: 'data' //规定数据列表的字段名称，默认：data
+                }
+            , request:
+                {
+                    pageName: 'curr' //页码的参数名称，默认：page
+                  , limitName: 'nums' //每页数据量的参数名，默认：limit
+                }
+            , cols: [[ //表头
+                { field: 'place_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+              , { field: 'place_name', title: '名称', width: 450, align: 'center', templet: '#StoragePlaceNameTpl', unresize: true }
+              , { field: 'place_type', title: '类型', width: 150, align: 'center', unresize: true }
+              , { field: 'place_state', title: '状态', width: 120, align: 'center', templet: '#switchTpl', unresize: true }
+              , { field: 'place_remark', title: '说明', width: 400, align: 'center', unresize: true }
+              , { title: '操作', toolbar: '#barDemo', width: 460, align: 'center', unresize: true }
+            ]]
+        });
+
+        //监听状态操作
+        form.on('switch(stateDemo)', function (data) {
+            var text = "", layer = layui.layer, value = data.value, x = data.elem.checked;;
+            if (value == "已启用") {
+                text = '您确定要禁用该存放地点吗？';
+            } else {
+                text = '您确定要启用该存放地点吗？';
+            }
+            // 获取当前控件
+            var selectIfKey = data.othis;
+            // 获取当前所在行
+            var parentTr = selectIfKey.parents("tr");
+            //eq(0): 代表的是表头字段位置    .layui-table-cell: 这个元素是我找表格div找出来的..
+            var dataField = $(parentTr).find("td:eq(0)").find(".layui-table-cell").text();
+            // console.log(dataField);
+            layer.open({
+                content: text
+                , btn: ['确定', '取消']
+                , title: '提示'
+                , yes: function (index, layero) {
+                    data.elem.checked = x;
+                    $.ajax({
+                        url: '/StoragePlace/UpdateState',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { id: dataField, state: value },
+                        success: function (data) {
+                            alert("更改成功！");
+                            table.reload('idTest', {
+                                url: '/StoragePlace/TableLoading'
+                            });
+                        },
+                        error: function (data) {
+                            alert("更改失败！");
+                        }
+                    });
+                    form.render();
+                    layer.close(index);
+                    //按钮【确定】的回调
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+                    data.elem.checked = !x;
+                    form.render();
+                    layer.close(index);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+                    data.elem.checked = !x;
+                    form.render();
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+            return false;
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //新增事件
+                case 'Add':
+                    $("#StoragePlace").val("");//清空文本框值
+                    $("#StoragePlaceType").val("");
+                    $("#StoragePlaceRemark").val("");
+                    //实例一个弹出层
+                    layer.open({
+                        type: 1
+                    , area: ['450px', '350px']
+                    , content: $("#type-edit")
+                    , title: '新增存放地点'
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //按钮【确定】的回调
+                        //非空判断
+                        if ($("#StoragePlace").val() == "" && $("#StoragePlaceType").val() == "") {
+                            alert("存放地点名称和类型不能为空！");
+                        } else if ($("#StoragePlace").val() == "") {
+                            alert("存放地点名称不能为空！");
+                        } else if ($("#StoragePlaceType").val() == "") {
+                            alert("类型不能为空！");
+                        }
+                            //不为空时
+                        else {
+                            //先判断长度限制
+                            if ($("#StoragePlace").val().length > 15) {
+                                alert("存放地点名称不能大于15字！");
+                            } else if ($("#StoragePlaceRemark").val().length > 50) {
+                                alert("说明不能大于50字符！");
+                            }
+                                //执行新增
+                            else {
+                                //查询待新增的值是否重名
+                                $.ajax({
+                                    url: '/StoragePlace/TableLoadingAddRpt',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        //如果数据库有数据时
+                                        if (data.length != 0) {
+                                            var num = 0;//变量存储for执行次数
+                                            for (var i = 0; i < data.length; i++) {
+                                                //判断是否重名
+                                                if ($("#StoragePlace").val() == data[i].place_name) {
+                                                    // console.info(data[i].AsClass_no);
+                                                    alert("存放地点名称已存在");
+                                                    return;
+                                                }
+                                                else {
+                                                    num += 1;
+                                                    //当执行最后一次for时
+                                                    if (num == data.length) {
+                                                        //执行新增
+                                                        $.ajax({
+                                                            url: '/StoragePlace/AddStoragePlace',
+                                                            type: 'post',
+                                                            dataType: 'json',
+                                                            data: {
+                                                                type: $("#StoragePlaceType").val(), name: $("#StoragePlace").val(), remark: $("#StoragePlaceRemark").val()
+                                                            },
+                                                            success: function (data) {
+                                                                alert("新增成功！");
+                                                                table.reload('idTest', {
+                                                                    url: '/StoragePlace/TableLoading'
+                                                                });
+                                                                layer.close(index);
+                                                            },
+                                                            error: function (data) {
+                                                                alert("新增失败！");
+                                                                layer.close(index);
+                                                            }
+                                                        });
+                                                    }
+
+                                                }
+
+                                            }
+                                        }
+                                            //如果数据库无数据时
+                                        else {
+                                            //执行新增
+                                            $.ajax({
+                                                url: '/StoragePlace/AddStoragePlace',
+                                                type: 'post',
+                                                dataType: 'json',
+                                                data: {
+                                                    type: $("#StoragePlaceType").val(), name: $("#StoragePlace").val(), remark: $("#StoragePlaceRemark").val()
+                                                },
+                                                success: function (data) {
+                                                    alert("新增成功！");
+                                                    table.reload('idTest', {
+                                                        url: '/StoragePlace/TableLoading'
+                                                    });
+                                                    layer.close(index);
+                                                },
+                                                error: function (data) {
+                                                    alert("新增失败！");
+                                                    layer.close(index);
+                                                }
+                                            });
+                                        }
+                                    },
+                                    error: function (data) {
+                                        alert("");
+                                    }
+                                });
+
+                            }
+                        }
+                    }
+                    , btn2: function (index, layero) {
+                        //按钮【取消】的回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                    , cancel: function () {
+                        //右上角关闭回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                    });
+                    break;
+                    //查询事件
+                case 'Select':
+                    var name = $("#place_name").val();
+                    var state = $("#StoragePlaceState").val();
+                    Table.reload({
+                        url: '/StoragePlace/TableLoadingByName',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            name: $("#place_name").val()
+                          , state: $("#StoragePlaceState").val()
+                        }
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var $ = layui.jquery, layer = layui.layer, data = obj.data;
+            //console.log(obj)
+            //修改事件
+            if (obj.event === 'edit') {
+                var data = obj.data;
+                $("#StoragePlace").val(data.place_name);//传值
+                $("#StoragePlaceType").val(data.place_type);
+                $("#StoragePlaceRemark").val(data.place_remark);
+                //实例一个弹出层
+                layer.open({
+                    type: 1
+                , area: ['450px', '350px']
+                , content: $("#type-edit")
+                , title: '修改存放地点'
+                , btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    //按钮【确定】的回调
+                    //非空判断
+                    if ($("#StoragePlace").val() == "" && $("#StoragePlaceType").val() == "") {
+                        alert("存放地点名称和类型不能为空！");
+                    } else if ($("#StoragePlace").val() == "") {
+                        alert("存放地点名称不能为空！");
+                    } else if ($("#StoragePlaceType").val() == "") {
+                        alert("类型不能为空！");
+                    }
+                        //不为空时
+                    else {
+                        var regnum = /^[0-9]*$/;//校检是否为纯数字
+                        //先判断长度限制
+                        if ($("#StoragePlace").val().length > 15) {
+                            alert("存放地点名称不能大于15字！");
+                        } else if ($("#StoragePlaceRemark").val().length > 50) {
+                            alert("说明不能大于50字符！");
+                        }
+                            //执行修改
+                        else {
+                            //查询待修改的值是否重名
+                            $.ajax({
+                                url: '/StoragePlace/TableLoadingUpdateRpt',
+                                type: 'post',
+                                dataType: 'json',
+                                data: { id: obj.data.place_id },
+                                success: function (data) {
+                                    var num = 0;//变量存储for执行次数
+                                    for (var i = 0; i < data.length; i++) {
+                                        //判断是否重名
+                                        if ($("#StoragePlace").val() == data[i].place_name) {
+                                            // console.info(data[i].AsClass_no);
+                                            alert("存放地点名称已存在");
+                                            return;
+                                        }
+                                        else {
+                                            num += 1;
+                                            //当执行最后一次for时
+                                            if (num == data.length) {
+                                                //执行修改
+                                                $.ajax({
+                                                    url: '/StoragePlace/UpdateStoragePlace',
+                                                    type: 'post',
+                                                    dataType: 'json',
+                                                    data: {
+                                                        id: obj.data.sup_id, type: $("#StoragePlaceType").val(), name: $("#StoragePlace").val(), remark: $("#StoragePlaceRemark").val()
+                                                    },
+                                                    success: function (data) {
+                                                        alert("更改成功！");
+                                                        table.reload('idTest', {
+                                                            url: '/StoragePlace/TableLoading'
+                                                        });
+                                                        layer.close(index);
+                                                    },
+                                                    error: function (data) {
+                                                        alert("更改失败！");
+                                                        layer.close(index);
+                                                    }
+                                                });
+                                            }
+
+                                        }
+
+                                    }
+                                },
+                                error: function (data) {
+                                    alert("");
+                                }
+                            });
+
+                        }
+                    }
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                });
+            }
+        })
+    });
+
+</script>
+
+@*详情供应商信息弹出框*@
+<div id="type-detail" style="display:none" name="type-detail">
+    <br />
+    <div class="layui-form-item">
+        <label class="layui-form-label">存放地点名称：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceTypeInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceStateInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">说明：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceRemarkInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+@*修改/新增供应商信息弹出框*@
+<div id="type-edit" style="display:none" name="type-edit">
+    <br />
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="impInfo">*</span>存放地点名称：</label>
+        <div class="layui-input-block">
+            <input style="width: 270px" id="StoragePlace" type="text" name="StoragePlaceName" required
+                   lay-verify="required" autocomplete="off" placeholder="15字以内" class="layui-input" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="impInfo">*</span>类型：</label>
+        <div class="layui-input-block">
+            <input style="width: 270px" id="StoragePlaceType" type="text" name="StoragePlaceType" required
+                   lay-verify="required" autocomplete="off" class="layui-input" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">说明：</label>
+        <div class="layui-input-block">
+            <textarea style="width: 270px" placeholder="请输入内容" class="layui-textarea" id="StoragePlaceRemark"></textarea>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+<body>
+    <div id="main">
+        <div class="title">
+            <span id="Place">当前位置：</span><span id="PersonInfoValues">存放地点</span>
+        </div>
+
+        <table id="TableStoragePlace" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="place_state" id="StoragePlaceState">
+                        <option value="0">--全部状态--</option>
+                        <option value="1">已禁用</option>
+                        <option value="2">已启用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input id="place_name" type="text" name="place_name" lay-verify="name" autocomplete="off"
+                           placeholder="请输入名称..." class="layui-input" style="width: 250px;">
+                </div>
+            </div>
+            <div class="layui-inline" style="margin-left:100px">
+                <button type="button" class="layui-btn" lay-event="Select"><i class="layui-icon layui-icon-search"></i></button>
+            </div>
+            <div class="layui-btn-container layui-inline">
+                <button class="layui-btn layui-btn-sm" lay-event="Add" style="margin-left: 1016px;">新增</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+        </script>
+
+        <script type="text/html" id="switchTpl">
+            <input type="checkbox" name="state" value="{{d.place_state}}" lay-skin="switch" lay-text="已启用|已禁用" lay-filter="stateDemo" {{ d.place_state == '已启用' ? 'checked' : '' }}>
+        </script>
+
+        <script type="text/html" id="StoragePlaceNameTpl">
+            <a href="#" onclick="show({{d.place_id}})" class="layui-table-link">{{ d.place_name }}</a>
+        </script>
+    </div>
+</body>

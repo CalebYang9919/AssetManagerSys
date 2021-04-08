@@ -1,0 +1,536 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //日期比较
+    function compartDate(beginDate, endDate) {
+        var dateStr1 = beginDate.split("-");
+        var date1 = new Date(dateStr1[0], dateStr1[1], dateStr1[2]);
+
+        var dateStr2 = endDate.split("-");
+        var date2 = new Date(dateStr2[0], dateStr2[1], dateStr2[2]);
+
+        if (date1 > date2) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    //时间
+    function getFDate(date) {
+        if (date == null) {
+            return "";
+        }
+        var d = eval('new ' + date.substr(1, date.length - 2));
+
+        var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+
+        for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+        return ar_date.join('-');
+    }
+    function dFormat(i) {
+        return i < 10 ? "0" + i.toString() : i;
+    }
+    //详情页
+    function show(id) {
+        $.ajax({
+            url: '/BorrowAndReturn/SelectInfoById',
+            type: 'post',
+            dataType: 'json',
+            data: { id: id },
+            success: function (data) {
+                $("#WarehousName").html(data.bandr_name);//传值资产信息
+                $("#WarehousNo").html(data.ware_no);
+                $("#WarehousClass").html(data.ware_class);
+                $("#WarehousSup").html(data.ware_sup);
+                $("#WarehousBrand").html(data.ware_brand);
+                $("#WarehousPlace").html(data.ware_place);
+                $("#WarehousAddTime").html(getFDate(data.ware_addtime));
+
+                $("#BandRBorrowNo").html(data.bandr_borrowno);//传值借用信息
+                $("#BandRDepart").html(data.bandr_depart);
+                $("#BandRBorrowTime").html(getFDate(data.bandr_borrowtime));
+                $("#BandRReson").html(data.bandr_reason);
+                $("#BandRReturnTime").html(getFDate(data.bandr_returntime));
+                $("#BandRRemark").html(data.bandr_remark);
+                layer.open({
+                    type: 1
+                            , area: ['900px', '695px']
+                            , content: $("#type-detail")
+                            , title: '资产借用单详情'
+                            , btn: ['关闭']
+                            , btn2: function (index, layero) {
+                                //按钮【取消】的回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                            , cancel: function () {
+                                //右上角关闭回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                });
+            },
+            error: function (data) {
+                alert(0);
+            }
+        });
+
+    };
+
+    //使用一个数据表格
+    layui.use(['table', 'laydate'], function () {
+        var table = layui.table, form = layui.form, laydate = layui.laydate;
+        //数据表格实例
+        var Table = table.render({
+            elem: '#TableBorrowAndReturn'
+           , height: 835
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+            , groups: 2//只显示 2 个连续页码
+            , limit: 15 //每页显示15条数据
+            }
+           , id: 'idTest'
+           , toolbar: '#toolbarDemo'
+           , url: '/BorrowAndReturn/TableLoading' //数据接口
+           , response:
+               {
+                   statusName: 'status' //规定数据状态的字段名称，默认：code
+                 , statusCode: 200 //规定成功的状态码，默认：0
+                 , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                 , countName: 'total' //规定数据总数的字段名称，默认：count
+                 , dataName: 'data' //规定数据列表的字段名称，默认：data
+               }
+           , request:
+               {
+                   pageName: 'curr' //页码的参数名称，默认：page
+                 , limitName: 'nums' //每页数据量的参数名，默认：limit
+               }
+           , cols: [[ //表头
+               { field: 'bandr_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+             , { field: 'bandr_borrowno', title: '借用单号', width: 170, align: 'center', unresize: true, templet: '#BorrowAndReturnNoTpl' }
+             , { field: 'bandr_no', title: '资产编码', width: 170, align: 'center', unresize: true }
+             , { field: 'bandr_name', title: '资产名称', width: 170, align: 'center', unresize: true }
+             , { field: 'bandr_class', title: '资产类别', width: 170, align: 'center', unresize: true }
+             , {
+                 field: 'bandr_borrowtime', title: '借用日期', width: 170, align: 'center', unresize: true, templet: function (d) { return getFDate(d.bandr_borrowtime) }
+             }
+             , { field: 'bandr_depart', title: '借用部门', width: 120, align: 'center', unresize: true }
+             , { field: 'bandr_reason', title: '借用原因', width: 170, align: 'center', unresize: true }
+             , {
+                 field: 'bandr_returntime', title: '归还日期', width: 170, align: 'center', unresize: true, templet: function (d) { return getFDate(d.bandr_returntime) }
+             }
+             , { field: 'bandr_state', title: '借用状态', width: 170, align: 'center', unresize: true }
+             , { title: '操作', toolbar: '#barDemo', width: 120, align: 'center', unresize: true }
+           ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //入库登记事件
+                case 'Add':
+                    location.href = "BorrowReg";
+                    break;
+                    //查询事件
+                case 'Select':
+                    var borrowno = $("#BorrowAndReturnNo").val();
+                    var nameno = $("#BorrowAndReturnNameNo").val();
+                    var state = $("#BorrowAndReturnClass").val();
+                    Table.reload({
+                        url: '/BorrowAndReturn/TableLoadingByName',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            nameno: $("#BorrowAndReturnNameNo").val()
+                          , state: $("#BorrowAndReturnClass").val()
+                            , borrowno: $("#BorrowAndReturnNo").val()
+                        }
+                    });
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var $ = layui.jquery, layer = layui.layer, data = obj.data;
+
+            //查询事件
+            if (obj.event === 'edit') {
+                //实例一个弹出层
+                layer.open({
+                    type: 1
+                , area: ['900px', '725px']
+                , content: $("#type-return")
+                , title: '资产归还'
+                , btn: ['确定', '取消']
+                , success: function (dom, index) {
+                    //查询资产/借用信息
+                    $.ajax({
+                        url: '/BorrowAndReturn/SelectInfoById',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { id: data.bandr_id },
+                        success: function (data) {
+                            $("#WarehousName1").html(data.bandr_name);//传值资产信息
+                            $("#WarehousNo1").html(data.ware_no);
+                            $("#WarehousClass1").html(data.ware_class);
+                            $("#WarehousSup1").html(data.ware_sup);
+                            $("#WarehousBrand1").html(data.ware_brand);
+                            $("#WarehousPlace1").html(data.ware_place);
+                            $("#WarehousAddTime1").html(getFDate(data.ware_addtime));
+
+                            $("#BandRBorrowNo1").html(data.bandr_borrowno);//传值借用信息
+                            $("#BandRDepart1").html(data.bandr_depart);
+                            $("#BandRBorrowTime1").html(getFDate(data.bandr_borrowtime));
+                            $("#BandRReson1").html(data.bandr_reason);
+                            $("#BandRReturnTime1").html(getFDate(data.bandr_returntime));
+                            $("#BandRRemark1").html(data.bandr_remark);
+                        },
+                        error: function (data) {
+                            alert(0);
+                        }
+                    });
+                    //日期
+                    laydate.render({
+                        elem: '#BandRReturnTime1'
+                    });
+
+                }
+                , yes: function (index, layero) {
+                    //按钮【确定】的回调
+                    //非空判断
+                    if ($("#BandRReturnTime1").val() == "") {
+                        alert("归还日期不能为空");
+                        return;
+                    }
+                    //字符限制
+                    if ($("#BandRRemark1").val().length > 200) {
+                        alert("备注不能大于200字符");
+                        return;
+                    }
+                    //当归还日期小于入库日期时
+                    var str1 = $("#BandRReturnTime1").val();//归还日期
+                    var str2 = $("#WarehousAddTime1").text();//入库日期
+                    if (!compartDate(str2, str1)) {
+                        alert("该资产归还日期不得早于入库日期");
+                        return;
+                    }
+                    //当归还日期小于借用日期时
+                    var str3 = $("#BandRReturnTime1").val();//归还日期
+                    var str4 = $("#BandRBorrowTime1").text();//借用日期
+                    if (!compartDate(str4, str3)) {
+                        alert("该资产归还日期不得早于借用日期");
+                        return;
+                    }
+                    //执行归还
+                    $.ajax({
+                        url: '/BorrowAndReturn/AddReturn',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { id: obj.data.bandr_id, bandr_remark: $("#BandRRemark1").val(), bandr_returntime: $("#BandRReturnTime1").val() },
+                        success: function (data) {
+                            alert("归还成功！");
+                            table.reload('idTest', {
+                                url: '/BorrowAndReturn/TableLoading'
+                            });
+                            layer.close(index);
+                        },
+                        error: function (data) {
+                            alert("归还失败！");
+                            layer.close(index);
+                        }
+                    });
+
+
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                });
+            }
+        });
+
+    });
+</script>
+
+@*详情订单弹出框*@
+<div id="type-detail" style="display:none" name="type-detail">
+    <br />
+    <h3 class="borrowInfo">资产信息</h3>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产名称：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousName" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">资产编码：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousNo" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产类型：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousClass" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousSup" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">品牌：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousBrand" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">存放地点：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousPlace" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousAddTime" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="borrowInfo">借用信息</h3>
+    <div class="layui-form-item">
+        <div class="layui-inline" style="font-weight:800">
+            <label class="layui-form-label" style="font-weight: 800">借用单号：</label>
+            <div class="layui-input-inline">
+                <label id="BandRBorrowNo" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">借用部门：</label>
+            <div class="layui-input-inline">
+                <label id="BandRDepart" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">借用日期：</label>
+            <div class="layui-input-inline">
+                <label id="BandRBorrowTime" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">借用原因：</label>
+            <div class="layui-input-inline">
+                <label id="BandRReson" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">归还日期：</label>
+            <div class="layui-input-inline">
+                <label id="BandRReturnTime" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注：</label>
+        <div class="layui-input-block">
+            <label id="BandRRemark" class="labelInfo"></label>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+@*资产归还弹出框*@
+<div id="type-return" style="display:none" name="type-return">
+    <br />
+    <h3 class="borrowInfo">资产信息</h3>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产名称：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousName1" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">资产编码：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousNo1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产类型：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousClass1" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousSup1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">品牌：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousBrand1" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">存放地点：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousPlace1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousAddTime1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="borrowInfo">借用信息</h3>
+    <div class="layui-form-item">
+        <div class="layui-inline" style="font-weight:800">
+            <label class="layui-form-label" style="font-weight: 800">借用单号：</label>
+            <div class="layui-input-inline">
+                <label id="BandRBorrowNo1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">借用部门：</label>
+            <div class="layui-input-inline">
+                <label id="BandRDepart1" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">借用日期：</label>
+            <div class="layui-input-inline">
+                <label id="BandRBorrowTime1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">借用原因：</label>
+            <div class="layui-input-inline">
+                <label id="BandRReson1" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label"><span class="impInfo">*</span>归还日期：</label>
+            <div class="layui-input-inline" style="width:275px">
+                <input type="text" name="date" id="BandRReturnTime1" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">备注：</label>
+            <div class="layui-input-inline">
+                <textarea id="BandRRemark1" placeholder="200字以内" class="layui-textarea"
+                          name="bandr_reason" lay-verify="reason" style="min-height: 70px;width: 700px"></textarea>
+            </div>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+<body>
+    <div id="main">
+        <div class="title">
+            <span id="Place">当前位置：</span><span id="PersonInfoValues">资产借还</span>
+        </div>
+
+        <table id="TableBorrowAndReturn" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input id="BorrowAndReturnNo" type="text" name="BorrowAndReturnNo" lay-verify="name" autocomplete="off"
+                           placeholder="借用单号" class="layui-input" style="width: 150px;">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="sup_state" id="BorrowAndReturnClass">
+                        <option value="0">--全部状态--</option>
+                        <option value="1">已归还</option>
+                        <option value="2">已借出</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input id="BorrowAndReturnNameNo" type="text" name="sup_name" lay-verify="name" autocomplete="off"
+                           placeholder="资产编码/名称" class="layui-input" style="width: 250px;">
+                </div>
+            </div>
+            <div class="layui-inline" style="margin-left:100px">
+                <button type="button" class="layui-btn" lay-event="Select"><i class="layui-icon layui-icon-search"></i></button>
+            </div>
+            <div class="layui-btn-container layui-inline">
+                <button class="layui-btn layui-btn-sm" lay-event="Add" style="margin-left: 862px;">借用登记</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="barDemo">
+            {{#  if(d.bandr_state == "已借出"){ }}
+            <a class="layui-btn layui-btn-xs" lay-event="edit">归还</a>
+            {{#  } }}
+        </script>
+
+        <script type="text/html" id="BorrowAndReturnNoTpl">
+            <a href="#" onclick="show({{d.bandr_id}})" class="layui-table-link">{{ d.bandr_borrowno }}</a>
+        </script>
+    </div>
+</body>

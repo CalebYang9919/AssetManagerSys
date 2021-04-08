@@ -1,0 +1,403 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+<script>
+    //使用一个数据表格
+    layui.use('table', function () {
+        var table = layui.table, form = layui.form;
+        //数据表格实例
+        table.render({
+            elem: '#TableBrand'
+          , height: 835
+           , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+               layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+           , groups: 2//只显示 2 个连续页码
+           , limit: 15 //每页显示15条数据
+           }
+          , id: 'idTest'
+          , toolbar: '#toolbarDemo'
+          , url: '/Brand/TableLoading' //数据接口
+          , response:
+              {
+                  statusName: 'status' //规定数据状态的字段名称，默认：code
+                , statusCode: 200 //规定成功的状态码，默认：0
+                , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+              }
+          , request:
+              {
+                  pageName: 'curr' //页码的参数名称，默认：page
+                , limitName: 'nums' //每页数据量的参数名，默认：limit
+              }
+          , cols: [[ //表头
+              { field: 'brand_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+            , { field: 'brand_no', title: '品牌编码', width: 450, align: 'center', unresize: true }
+            , { field: 'brand_name', title: '品牌名称', width: 450, align: 'center', unresize: true }
+            , { field: 'brand_state', title: '状态', width: 200, align: 'center', templet: '#switchTpl', unresize: true }
+            , { title: '操作', toolbar: '#barDemo', width: 490, align: 'center', unresize: true }
+          ]]
+        });
+
+        //监听状态操作
+        form.on('switch(stateDemo)', function (data) {
+            var text = "", layer = layui.layer, value = data.value, x = data.elem.checked;;
+            if (value == "已启用") {
+                text = '您确定要禁用该品牌吗？';
+            } else {
+                text = '您确定要启用该品牌吗？';
+            }
+            // 获取当前控件
+            var selectIfKey = data.othis;
+            // 获取当前所在行
+            var parentTr = selectIfKey.parents("tr");
+            //eq(0): 代表的是表头字段位置    .layui-table-cell: 这个元素是我找表格div找出来的..
+            var dataField = $(parentTr).find("td:eq(0)").find(".layui-table-cell").text();
+            // console.log(dataField);
+            layer.open({
+                content: text
+                , btn: ['确定', '取消']
+                , title: '提示'
+                , yes: function (index, layero) {
+                    data.elem.checked = x;
+                    $.ajax({
+                        url: '/Brand/UpdateState',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { id: dataField, state: value },
+                        success: function (data) {
+                            alert("更改成功！");
+                            table.reload('idTest', {
+                                url: '/Brand/TableLoading'
+                            });
+                        },
+                        error: function (data) {
+                            alert("更改失败！");
+                        }
+                    });
+                    form.render();
+                    layer.close(index);
+                    //按钮【确定】的回调
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+                    data.elem.checked = !x;
+                    form.render();
+                    layer.close(index);
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+                    data.elem.checked = !x;
+                    form.render();
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+            });
+            return false;
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //新增事件
+                case 'Add':
+                    $("#Brand").val("");//清空文本框值
+                    $("#BrandNo").val("");
+                    //实例一个弹出层
+                    layer.open({
+                        type: 1
+                    , area: ['450px', '235px']
+                    , content: $("#type-edit")
+                    , title: '新增品牌'
+                    , btn: ['确定', '取消']
+                    , yes: function (index, layero) {
+                        //按钮【确定】的回调
+                        //非空判断
+                        if ($("#BrandNo").val() == "" && $("#Brand").val() == "") {
+                            alert("品牌名称和品牌编码不能为空！");
+                        } else if ($("#Brand").val() == "") {
+                            alert("品牌名称不能为空！");
+                        } else if ($("#BrandNo").val() == "") {
+                            alert("品牌编码不能为空！");
+                        }
+                            //不为空时
+                        else {
+                            var reg = /\w+$/;//校检是否是字母数字下划线
+                            var regnum = /^[0-9]*$/;//校检是否为纯数字
+                            var regstr = /^[A-Za-z]+$/;//校检是否为纯字符
+                            //先判断长度限制
+                            if ($("#Brand").val().length > 10) {
+                                alert("品牌名称不能大于10字！");
+                            } else if ($("#BrandNo").val().length > 10) {
+                                alert("品牌编码不能大于10字符！");
+                            }
+                                //再格式限制/
+                            else if (regnum.test($("#BrandNo").val())) {
+                                alert("字符格式必须为“英文字母及数字的组合”");
+                            }
+                            else if (regstr.test($("#BrandNo").val())) {
+                                alert("字符格式必须为“英文字母及数字的组合”");
+                            }
+                                //执行新增
+                            else if (reg.test($("#BrandNo").val())) {
+                                //查询待新增的值是否重名
+                                $.ajax({
+                                    url: '/Brand/TableLoadingAddRpt',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        //如果数据库有数据时
+                                        if (data.length != 0) {
+                                            var num = 0;//变量存储for执行次数
+                                            for (var i = 0; i < data.length; i++) {
+                                                //判断是否重名
+                                                if ($("#BrandNo").val() == data[i].brand_no) {
+                                                    // console.info(data[i].AsClass_no);
+                                                    alert("品牌编码已存在");
+                                                    return;
+                                                } else if ($("#Brand").val() == data[i].brand_name) {
+                                                    alert("品牌名称已存在");
+                                                    return;
+                                                }
+                                                else {
+                                                    num += 1;
+                                                    //当执行最后一次for时
+                                                    if (num == data.length) {
+                                                        //执行新增
+                                                        $.ajax({
+                                                            url: '/Brand/AddBrand',
+                                                            type: 'post',
+                                                            dataType: 'json',
+                                                            data: { no: $("#BrandNo").val(), name: $("#Brand").val() },
+                                                            success: function (data) {
+                                                                alert("新增成功！");
+                                                                table.reload('idTest', {
+                                                                    url: '/Brand/TableLoading'
+                                                                });
+                                                                layer.close(index);
+                                                            },
+                                                            error: function (data) {
+                                                                alert("新增失败！");
+                                                                layer.close(index);
+                                                            }
+                                                        });
+                                                    }
+
+                                                }
+
+                                            }
+                                        }
+                                        //如果数据库无数据时
+                                        else {
+                                            //执行新增
+                                            $.ajax({
+                                                url: '/Brand/AddBrand',
+                                                type: 'post',
+                                                dataType: 'json',
+                                                data: { no: $("#BrandNo").val(), name: $("#Brand").val() },
+                                                success: function (data) {
+                                                    alert("新增成功！");
+                                                    table.reload('idTest', {
+                                                        url: '/Brand/TableLoading'
+                                                    });
+                                                    layer.close(index);
+                                                },
+                                                error: function (data) {
+                                                    alert("新增失败！");
+                                                    layer.close(index);
+                                                }
+                                            });
+                                        }
+                                    },
+                                    error: function (data) {
+                                        alert("");
+                                    }
+                                });
+
+                            }
+                            else {
+                                alert("字符格式必须为“英文字母及数字的组合”");
+                            }
+                        }
+                    }
+                    , btn2: function (index, layero) {
+                        //按钮【取消】的回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                    , cancel: function () {
+                        //右上角关闭回调
+
+                        //return false 开启该代码可禁止点击该按钮关闭
+                    }
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var $ = layui.jquery, layer = layui.layer, data = obj.data;
+            //console.log(obj)
+            //修改事件
+            if (obj.event === 'edit') {
+                var data = obj.data;
+                $("#Brand").val(data.brand_name);//传值
+                $("#BrandNo").val(data.brand_no);
+                //实例一个弹出层
+                layer.open({
+                    type: 1
+                , area: ['450px', '235px']
+                , content: $("#type-edit")
+                , title: '修改品牌'
+                , btn: ['确定', '取消']
+                , yes: function (index, layero) {
+                    //按钮【确定】的回调
+                    //非空判断
+                    if ($("#BrandNo").val() == "" && $("#Brand").val() == "") {
+                        alert("品牌名称和品牌编码不能为空！");
+                    } else if ($("#Brand").val() == "") {
+                        alert("品牌名称不能为空！");
+                    } else if ($("#BrandNo").val() == "") {
+                        alert("品牌编码不能为空！");
+                    }
+                        //不为空时
+                    else {
+                        var reg = /\w+$/;//校检是否是字母数字下划线
+                        var regnum = /^[0-9]*$/;//校检是否为纯数字
+                        var regstr = /^[A-Za-z]+$/;//校检是否为纯字符
+                        //先判断长度限制
+                        if ($("#Brand").val().length > 10) {
+                            alert("品牌名称不能大于10字！");
+                        } else if ($("#BrandNo").val().length > 10) {
+                            alert("品牌编码不能大于10字符！");
+                        }
+                            //再格式限制/
+                        else if (regnum.test($("#BrandNo").val())) {
+                            alert("字符格式必须为“英文字母及数字的组合”");
+                        }
+                        else if (regstr.test($("#BrandNo").val())) {
+                            alert("字符格式必须为“英文字母及数字的组合”");
+                        }
+                            //执行修改
+                        else if (reg.test($("#BrandNo").val())) {
+                            //查询待修改的值是否重名
+                            $.ajax({
+                                url: '/Brand/TableLoadingUpdateRpt',
+                                type: 'post',
+                                dataType: 'json',
+                                data: { id: obj.data.brand_id },
+                                success: function (data) {
+                                    var num = 0;//变量存储for执行次数
+                                    for (var i = 0; i < data.length; i++) {
+                                        //判断是否重名
+                                        if ($("#BrandNo").val() == data[i].brand_no) {
+                                            // console.info(data[i].AsClass_no);
+                                            alert("品牌编号已存在");
+                                            return;
+                                        } else if ($("#Brand").val() == data[i].brand_name) {
+                                            alert("品牌名称已存在");
+                                            return;
+                                        }
+                                        else {
+                                            num += 1;
+                                            //当执行最后一次for时
+                                            if (num == data.length) {
+                                                //执行修改
+                                                $.ajax({
+                                                    url: '/Brand/UpdateBrand',
+                                                    type: 'post',
+                                                    dataType: 'json',
+                                                    data: { id: obj.data.brand_id, no: $("#BrandNo").val(), name: $("#Brand").val() },
+                                                    success: function (data) {
+                                                        alert("更改成功！");
+                                                        table.reload('idTest', {
+                                                            url: '/Brand/TableLoading'
+                                                        });
+                                                        layer.close(index);
+                                                    },
+                                                    error: function (data) {
+                                                        alert("更改失败！");
+                                                        layer.close(index);
+                                                    }
+                                                });
+                                            }
+
+                                        }
+
+                                    }
+                                },
+                                error: function (data) {
+                                    alert("");
+                                }
+                            });
+
+                        }
+                        else {
+                            alert("字符格式必须为“英文字母及数字的组合”");
+                        }
+                    }
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                });
+            }
+        });
+
+    });
+</script>
+
+@*修改/新增信息弹出框*@
+<div id="type-edit" style="display:none">
+    <br />
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="impInfo">*</span>品牌名称：</label>
+        <div class="layui-input-block">
+            <input style="width: 270px" id="Brand" type="text" name="BrandName" required
+                   lay-verify="required" autocomplete="off" placeholder="10字以内" class="layui-input" />
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span class="impInfo">*</span>品牌编码：</label>
+        <div class="layui-input-block">
+            <input style="width: 270px" id="BrandNo" type="text" name="BrandNo" required
+                   lay-verify="required" autocomplete="off" placeholder="限制10位字符，英文字母和数字的组合" class="layui-input" />
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+<body>
+    <div id="main">
+        <div class="title">
+            <span id="Place">当前位置：</span><span id="PersonInfoValues">品牌</span>
+        </div>
+
+        <table id="TableBrand" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="Add">新增</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
+        </script>
+
+        <script type="text/html" id="switchTpl">
+            <input type="checkbox" name="state" value="{{d.brand_state}}" lay-skin="switch" lay-text="已启用|已禁用" lay-filter="stateDemo" {{ d.brand_state == '已启用' ? 'checked' : '' }}>
+        </script>
+    </div>
+</body>

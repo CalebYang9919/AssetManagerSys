@@ -1,0 +1,234 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //时间
+    function getFDate(date) {
+        var d = eval('new ' + date.substr(1, date.length - 2));
+
+        var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+
+        for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+        return ar_date.join('-');
+    }
+    function dFormat(i) {
+        return i < 10 ? "0" + i.toString() : i;
+    }
+    //日期比较
+    function compartDate(beginDate, endDate) {
+        var dateStr1 = beginDate.split("-");
+        var date1 = new Date(dateStr1[0], dateStr1[1], dateStr1[2]);
+
+        var dateStr2 = endDate.split("-");
+        var date2 = new Date(dateStr2[0], dateStr2[1], dateStr2[2]);
+
+        if (date1 > date2) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    $(function () {
+        //资产名称下拉绑定
+        $.ajax({
+            url: 'SelectWarehous',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#WarehousName").append("<option value=" + data[i].ware_id + ">" + data[i].ware_name + "</option>");
+                }
+            }
+        });
+
+        //借用部门下拉绑定
+        $.ajax({
+            url: 'SelectDepartment',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#Department").append("<option value=" + data[i].depart_id + ">" + data[i].depart_name + "</option>");
+                }
+            }
+        });
+
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render('select');
+        });
+
+        //取消按钮事件
+        $("#btncancel").click(function () {
+            location.href = "Index";
+        });
+
+    });
+
+    layui.use(['form', 'laydate'], function () {
+        var form = layui.form, laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+
+        //自定义验证规则
+        form.verify({
+            name: function (value) {
+                if (value.length > 10) {
+                    return '资产名称不能大于10字';
+                }
+                if (value == "") {
+                    return '必填项不能为空';
+                }
+            },
+
+            //日期验证
+            date: function (value) {
+                if (value == "") {
+                    return '必填项不能为空';
+                }
+            },
+
+            //借用原因验证
+            reason: function (value) {
+                if (value == "") {
+                    return '必填项不能为空';
+                }
+                if (value.length > 200) {
+                    return '借用原因不能大于200字';
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            //Ajax查询资产入库日期
+            $.ajax({
+                url: 'SelectWarehousAddTime',
+                type: 'post',
+                dataType: 'json',
+                data: { id: $("#WarehousName").val() },
+                success: function (data) {
+                    //当借用日期小于入库日期时
+                    var str1 = $("#date").val();//借用日期
+                    var date = data[0].ware_addtime;
+                    var str2 = getFDate(date)//入库日期
+                    if (!compartDate(str2, str1)) {
+                        alert("该资产借用日期不得早于入库日期");
+                        return;
+                    }
+                    else {
+                        //执行借用登记
+                        $.ajax({
+                            url: 'AddBorrow',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                id: $("#WarehousName").val(), bandr_borrowtime: $("#date").val(),
+                                bandr_name: $("#WarehousName").val(), bandr_depart: $("#Department").val(), bandr_reason: $("#BorrowReason").val()
+                            },
+                            success: function (data) {
+                                //更改借用状态
+                                $.ajax({
+                                    url: 'UpdateState',
+                                    type: 'post',
+                                    dataType: 'json',
+                                    data: { id: $("#WarehousName").val(), },
+                                    success: function (data) {
+                                        alert("借用登记成功！");
+                                        location.href = "Index";
+                                    }
+                                });
+                            },
+                            error: function (data) {
+                                alert("借用登记失败！");
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert(0);
+                }
+            });
+
+            return false;
+        });
+
+        //资产名称下拉绑定
+        form.on('select(WarehousName)', function (data) {
+            $.ajax({
+                url: 'BindNameById',
+                type: 'post',
+                dataType: 'json',
+                data: { id: $("#WarehousName").val() },
+                async: false,//改为同步
+                success: function (data) {
+                        $("#BindNo").html(data[0].ware_no);
+                },
+            });
+        })
+    });
+</script>
+
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">资产借用登记</span>
+    </div>
+
+    @*表单*@
+    <from class="layui-form" id="form1" action="">
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产名称：</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <select name="bandr_name" lay-verify="required" id="WarehousName" lay-filter="WarehousName">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion">资产编码:</label>
+            <div class="layui-input-block">
+                <label class="labelInfo" id="BindNo">自动获取</label>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>借用部门:</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <select name="bandr_depart" lay-verify="required" id="Department">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>借用时间:</label>
+            <div class="layui-input-block" style="width: 275px;">
+                <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>借用原因:</label>
+            <div class="layui-input-block" style="width: 600px;">
+                <textarea id="BorrowReason" placeholder="200字以内" class="layui-textarea"
+                          name="bandr_reason" lay-verify="reason" style="height: 300px;"></textarea>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="line-height: 100px;">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">确定</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="btncancel">取消</button>
+            </div>
+        </div>
+    </from>
+</div>

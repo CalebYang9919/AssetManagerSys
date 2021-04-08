@@ -1,0 +1,263 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //时间
+    function getFDate(date) {
+        var d = eval('new ' + date.substr(1, date.length - 2));
+
+        var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+
+        for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+        return ar_date.join('-');
+    }
+    function dFormat(i) {
+        return i < 10 ? "0" + i.toString() : i;
+    }
+    function a(id, name) {
+        var all_optionse = document.getElementById(id).options;
+        for (i = 0; i < all_optionse.length; i++) {
+            if (all_optionse[i].value == name)  // 根据option标签的ID来进行判断  测试的代码这里是两个等号
+            {
+                all_optionse[i].selected = true;
+            }
+        }
+    }
+
+    $(function () {
+        $("#ware_name").val(sessionStorage["name"]);
+        $("#WarehousNo").text(sessionStorage["no"]);
+        $("#WarehousAddTime").text(getFDate(sessionStorage["addtime"]));
+
+        //资产类别下拉绑定
+        $.ajax({
+            url: 'SelectAssetsClass',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#AssetsClass").append("<option value=" + data[i].AsClass_id + ">" + data[i].AsClass_name + "</option>");
+                }
+            }
+        });
+
+        //供应商下拉绑定
+        $.ajax({
+            url: 'SelectSupplier',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#Supplier").append("<option value=" + data[i].sup_id + ">" + data[i].sup_name + "</option>");
+                }
+            }
+        });
+
+        //品牌下拉绑定
+        $.ajax({
+            url: 'SelectBrand',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#Brand").append("<option value=" + data[i].brand_id + ">" + data[i].brand_name + "</option>");
+                }
+            }
+        });
+
+        //存放地点下拉绑定
+        $.ajax({
+            url: 'SelectStoragePlace',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#StoragePlace").append("<option value=" + data[i].place_id + ">" + data[i].place_name + "</option>");
+                }
+            }
+        });
+
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render('select');
+        });
+
+        //取消按钮事件
+        $("#btncancel").click(function () {
+            location.href = "Index";
+        });
+        a("AssetsClass", sessionStorage["class"]);
+        a("Supplier", sessionStorage["sup"]);
+        a("Brand", sessionStorage["brand"]);
+        a("StoragePlace", sessionStorage["place"]);
+    });
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            name: function (value) {
+                if (value.length > 10) {
+                    return '资产名称不能大于10字';
+                }
+                if (value == "") {
+                    return '必填项不能为空';
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+
+            //查询待修改的资产名称是否重名
+            $.ajax({
+                url: '/Warehous/TableLoadingUpdateRpt',
+                type: 'post',
+                dataType: 'json',
+                data: { id: sessionStorage["id"] },
+                success: function (data) {
+                    //如果数据库有数据时
+                    if (data.length != 0) {
+                        var num = 0;//变量存储for执行次数
+                        for (var i = 0; i < data.length; i++) {
+                            //判断是否重名
+                            if ($("#ware_name").val() == data[i].ware_name) {
+                                alert("该资产名称已存在");
+                                return;
+                            }
+                            else {
+                                num += 1;
+                                //当执行最后一次for时
+                                if (num == data.length) {
+                                    //执行修改
+                                    $.ajax({
+                                        url: 'UpdateWarehous',
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: {
+                                            id: sessionStorage["id"], ware_name: $("#ware_name").val(), ware_class: $("#AssetsClass").val(),
+                                            ware_sup: $("#Supplier").val(), ware_brand: $("#Brand").val(), ware_place: $("#StoragePlace").val()
+                                        },
+                                        success: function (data) {
+                                            alert("修改成功！");
+                                            location.href = "Index";
+                                        },
+                                        error: function (data) {
+                                            alert("修改失败！");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                        //如果数据库无数据时
+                    else {
+                        //执行修改
+                        $.ajax({
+                            url: 'UpdateWarehous',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                id: sessionStorage["id"], ware_name: $("#ware_name").val(), ware_class: $("#AssetsClass").val(),
+                                ware_sup: $("#Supplier").val(), ware_brand: $("#Brand").val(), ware_place: $("#StoragePlace").val()
+                            },
+                            success: function (data) {
+                                alert("修改成功！");
+                                location.href = "Index";
+                            },
+                            error: function (data) {
+                                alert("修改失败！");
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert("");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">修改资产信息</span>
+    </div>
+
+    @*表单*@
+    <from class="layui-form" id="form1" action="">
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产编码：</label>
+            <div class="layui-input-block">
+                <label class="labelInfo" id="WarehousNo"></label>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产名称：</label>
+            <div class="layui-input-block">
+                <input id="ware_name" type="text" name="ware_name" lay-verify="name" autocomplete="off"
+                       placeholder="10字以内" class="layui-input" style="width: 500px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产类别:</label>
+            <div class="layui-input-block" style="width: 110px;">
+                <select name="ware_class" lay-verify="required" id="AssetsClass">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>供应商:</label>
+            <div class="layui-input-block" style="width: 200px;">
+                <select name="ware_sup" lay-verify="required" id="Supplier">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>品牌:</label>
+            <div class="layui-input-block" style="width: 110px;">
+                <select name="ware_brand" lay-verify="required" id="Brand">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>存放地点:</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <select name="ware_place" lay-verify="required" id="StoragePlace">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>入库日期:</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <label class="labelInfo" id="WarehousAddTime"></label>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="line-height: 100px;">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="btncancel">取消</button>
+            </div>
+        </div>
+    </from>
+</div>

@@ -1,0 +1,76 @@
+﻿@model Model.UserPrivileg
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>登录页面</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/themes/css/Login")
+    @Scripts.Render("~/bundles/js/Login")
+</head>
+<body>
+    <div id="container">
+        <div id="bd">
+            <div id="main">
+                <div class="login-box">
+                    <div id="logo"></div>
+                    <h1 style="font-size: 25px; margin-left: 30px;">球博资产管理系统</h1>
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                    {
+                        <table>
+                            <tr class="input username" id="username">
+                                <td for="userName">用户名<span></span></td>
+                                <td><input type="text" id="userName" name="user_name" /></td>
+                                @Html.ValidationMessageFor(u => u.user_name)
+                            </tr>
+                            <tr class="input psw" id="psw">
+                                <td for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码<span></span></td>
+                                <td><input type="password" id="password" name="user_pwd" /></td>
+                                @Html.ValidationMessageFor(u => u.user_pwd)
+                            </tr>
+                            <tr class="input validate" id="validate">
+                                <td for="valiDate">验证码</td>
+                                <td><input type="text" id="valiDate" name="Per" /></td>
+                                @Html.ValidationMessageFor(u => u.Per)
+                                <td class="value">@Session["radom"]</td>
+                            </tr>
+                            <tr class="styleArea">
+                                <td class="styleWrap">
+                                    <select name="power">
+                                        <option value="0">超级管理员</option>
+                                        <option value="1">资产管理员</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr id="btn" class="loginButton">
+                                <td><input type="submit" class="button" value="登录" /></td>
+                            </tr>
+                        </table>
+                    }
+                    <div style="position:absolute;color:red;left:435px;top:280px">@Session["result"]</div>
+                </div>
+            </div>
+            <div id="ft">CopyRight&nbsp;2019&nbsp;&nbsp;版权所有&nbsp;&nbsp;湖南保护摸黑箱工作室 <a href="#" target="_blank" title="">联系我们</a> - 系统 <a href="#" title="" target="_blank">资产管理系统</a> &nbsp;&nbsp;</div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+    var height = $(window).height() > 445 ? $(window).height() : 445;
+    $("#container").height(height);
+    var bdheight = ($(window).height() - $('#bd').height()) / 2 - 20;
+    $('#bd').css('padding-top', bdheight);
+    $(window).resize(function (e) {
+        var height = $(window).height() > 445 ? $(window).height() : 445;
+        $("#container").height(height);
+        var bdheight = ($(window).height() - $('#bd').height()) / 2 - 20;
+        $('#bd').css('padding-top', bdheight);
+    });
+    $('select').select();
+</script>
+</html>

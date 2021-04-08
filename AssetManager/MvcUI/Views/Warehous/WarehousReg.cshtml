@@ -1,0 +1,224 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    $(function () {
+        //清空表格数据
+        $("#ware_name").val("");//清空文本框值
+        $("#AssetsClass").val("");
+        $("#Supplier").val("");
+        $("#Brand").val("");
+        $("#StoragePlace").val("");
+        //资产类别下拉绑定
+        $.ajax({
+            url: 'SelectAssetsClass',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#AssetsClass").append("<option value=" + data[i].AsClass_id + ">" + data[i].AsClass_name + "</option>");
+                }
+            }
+        });
+
+        //供应商下拉绑定
+        $.ajax({
+            url: 'SelectSupplier',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#Supplier").append("<option value=" + data[i].sup_id + ">" + data[i].sup_name + "</option>");
+                }
+            }
+        });
+
+        //品牌下拉绑定
+        $.ajax({
+            url: 'SelectBrand',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#Brand").append("<option value=" + data[i].brand_id + ">" + data[i].brand_name + "</option>");
+                }
+            }
+        });
+
+        //存放地点下拉绑定
+        $.ajax({
+            url: 'SelectStoragePlace',
+            type: 'post',
+            dataType: 'json',
+            async: false,//改为同步
+            success: function (data) {
+                for (var i in data) {
+                    $("#StoragePlace").append("<option value=" + data[i].place_id + ">" + data[i].place_name + "</option>");
+                }
+            }
+        });
+
+        layui.use('form', function () {
+            var form = layui.form;
+            form.render('select');
+        });
+
+        //取消按钮事件
+        $("#btncancel").click(function () {
+            location.href = "Index";
+        });
+
+    });
+
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //自定义验证规则
+        form.verify({
+            name: function (value) {
+                if (value.length > 10) {
+                    return '资产名称不能大于10字';
+                }
+                if (value == "") {
+                    return '必填项不能为空';
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            //查询待入库的资产名称是否重名
+            $.ajax({
+                url: '/Warehous/TableLoadingAddRpt',
+                type: 'post',
+                dataType: 'json',
+                success: function (data) {
+                    //如果数据库有数据时
+                    if (data.length != 0) {
+                        var num = 0;//变量存储for执行次数
+                        for (var i = 0; i < data.length; i++) {
+                            //判断是否重名
+                            if ($("#ware_name").val() == data[i].ware_name) {
+                                alert("该资产名称已存在");
+                                return;
+                            }
+                            else {
+                                num += 1;
+                                //当执行最后一次for时
+                                if (num == data.length) {
+                                    //执行入库
+                                    $.ajax({
+                                        url: 'AddWarehous',
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: {
+                                            ware_name: $("#ware_name").val() + " ", ware_class: $("#AssetsClass").val(),
+                                            ware_sup: $("#Supplier").val(), ware_brand: $("#Brand").val(), ware_place: $("#StoragePlace").val()
+                                        },
+                                        success: function (data) {
+                                            alert("入库成功！");
+                                            location.href = "Index";
+                                        },
+                                        error: function (data) {
+                                            alert("入库失败！");
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                        //如果数据库无数据时
+                    else {
+                        //执行入库
+                        $.ajax({
+                            url: 'AddWarehous',
+                            type: 'post',
+                            dataType: 'json',
+                            data: {
+                                ware_name: $("#ware_name").val() + " ", ware_class: $("#AssetsClass").val(),
+                                ware_sup: $("#Supplier").val(), ware_brand: $("#Brand").val(), ware_place: $("#StoragePlace").val()
+                            },
+                            success: function (data) {
+                                alert("入库成功！");
+                                location.href = "Index";
+                            },
+                            error: function (data) {
+                                alert("入库失败！");
+                            }
+                        });
+                    }
+                },
+                error: function (data) {
+                    alert("");
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">入库登记</span>
+    </div>
+
+    @*表单*@
+    <form class="layui-form" id="form1" action="">
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产名称：</label>
+            <div class="layui-input-block">
+                <input id="ware_name" type="text" name="ware_name" lay-verify="name" autocomplete="off"
+                       placeholder="10字以内" class="layui-input" style="width: 500px;">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>资产类别:</label>
+            <div class="layui-input-block" style="width: 110px;">
+                <select name="ware_class" lay-verify="required" id="AssetsClass">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>供应商:</label>
+            <div class="layui-input-block" style="width: 200px;">
+                <select name="ware_sup" lay-verify="required" id="Supplier">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>品牌:</label>
+            <div class="layui-input-block" style="width: 110px;">
+                <select name="ware_brand" lay-verify="required" id="Brand">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="labelInfo labelPostion"><span class="impInfo">*</span>存放地点:</label>
+            <div class="layui-input-block" style="width: 150px;">
+                <select name="ware_place" lay-verify="required" id="StoragePlace">
+                    <option value="">--请选择--</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="line-height: 100px;">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary" id="btncancel">取消</button>
+            </div>
+        </div>
+    </form>
+</div>

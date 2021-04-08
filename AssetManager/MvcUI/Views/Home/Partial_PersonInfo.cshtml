@@ -1,0 +1,70 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<!--强类型-->
+<!--引入命名空间-->
+@using Model
+
+@model List<AdminPersonalInfo>
+<script>
+    layui.use(['form', 'laydate'], function () {
+        var form = layui.form;
+    });
+</script>
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">个人信息</span>
+    </div>
+</div>
+<br />
+<br />
+@foreach (var item in (List<AdminPersonalInfo>)ViewBag.userinfo)
+{
+    <form id="ShowInfo" method="post">
+        <div id="InfoPage">
+            <img src="~/Content/img/名片.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">姓名：</label><label style="margin-left: 90px;" id="txtName">@item.Personal_name</label><br />
+            <hr style="width: 1200px;" />
+            <div class="layui-inline">
+                <img src="~/Content/img/手机号.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">手机号：</label>
+                <div class="layui-input-inline">
+                    <input id="phoneresult" style="margin-left: 90px;width:200px" type="tel" name="Personal_iphone" class="layui-input" value="@item.Personal_iphone">&nbsp;&nbsp;
+                </div>
+                <button type="button" class="layui-btn" id="SaveBtn" style="margin-bottom: 15px;">保存</button>
+                <br />
+            </div>
+            <hr style="width: 1200px;" />
+            <img src="~/Content/img/工号.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">工号：</label><label style="margin-left: 90px;" id="txtNum">@item.Personal_no</label><br />
+            <hr style="width: 1200px;" />
+            <img src="~/Content/img/性别.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">性别：</label><label style="margin-left: 90px;" id="txtSex">@item.Personal_sex</label><br />
+            <hr style="width: 1200px;" />
+            <img src="~/Content/img/部门.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">部门：</label><label style="margin-left: 90px;" id="txtApart">@item.Personal_depart</label><br />
+            <hr style="width: 1200px;" />
+            <img src="~/Content/img/岗位管理.png" class="img" style="margin-left: -145px" />&nbsp;&nbsp;&nbsp;&nbsp;<label class="layui-form-label" style="margin-top: 8px;">职位：</label><label style="margin-left: 90px;" id="txtPosition">@item.Personal_position</label><br />
+            <hr style="width: 1200px;" />
+        </div>
+    </form>
+}
+
+<script>
+    $("#SaveBtn").click(function () {
+        var regex = /^1\d{10}$/;//手机号正则
+        if (regex.test($("#phoneresult").val())) {
+            $.ajax({
+                url: '/Home/Update',
+                data: $("#ShowInfo").serialize(),
+                dataType: 'Json',
+                success: function (data) {
+                    alert("修改成功！");
+                },
+                error: function (data) {
+                    alert("修改失败！");
+                }
+            })
+        } else {
+            alert("请输入正确的手机号格式");
+        }
+
+    })
+</script>

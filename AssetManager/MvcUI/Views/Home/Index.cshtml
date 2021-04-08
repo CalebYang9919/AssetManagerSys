@@ -1,0 +1,60 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*超级管理员首页*@
+<!DOCTYPE html>
+
+<html>
+<body>
+    <div style="overflow: hidden;height:876px;">
+        <div id="container">
+            <div id="bd">
+                <div class="sidebar">
+                    <div class="sidebar-bg"></div>
+                    <i class="sidebar-hide"></i>
+                    <ul class="nav">
+                        <li class="nav-li">
+                            <a href="/Home/PersonInfo" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">个人信息</span></a>
+                        </li>
+                        <li class="nav-li">
+                            <a href="/AssetsClass/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">资产类别</span></a>
+                        </li>
+                        <li class="nav-li">
+                            <a href="/Brand/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">品牌</span></a>
+                        </li>
+                        <li class="nav-li last-nav-li">
+                            <a href="/ScrapType/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">报废方式</span></a>
+                        </li>
+                        <li class="nav-li last-nav-li">
+                            <a href="/Supplier/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">供应商</span></a>
+                        </li>
+                        <li class="nav-li last-nav-li">
+                            <a href="/StoragePlace/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">存放地点</span></a>
+                        </li>
+                        <li class="nav-li last-nav-li">
+                            <a href="/Department/Index" target="Content" class="ue-clear"><i class="nav-ivon"></i><span class="nav-text">部门管理</span></a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="main">
+                    <div id="content" class="title">
+                        <i class="sidebar-show"></i>
+                        <iframe src="/Home/Welcome" name="Content" width="100%" height="100%"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            $(".ue-clear").click(function () {
+                sessionStorage["PersonInfo"] = $(".nav-text").text();
+            })
+        });
+        var menu = new Menu({
+            defaultSelect: $('.nav').find('li[data-id="1"]')
+        });
+    </script>
+</body>
+</html>

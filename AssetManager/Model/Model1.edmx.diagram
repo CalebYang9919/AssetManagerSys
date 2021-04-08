@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f1df76432c184c12b65573eaad1fbbed" Name="关系图1">
+        <EntityTypeShape EntityType="AssetManage_DBModel.AdminPersonalInfo" Width="1.5" PointX="8" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.AssetsClass" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.BorrowAndReturn" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.Brand" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.Department" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.Scrap" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.ScrapType" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.StoragePlace" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.Supplier" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.UserPrivileg" Width="1.5" PointX="5.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AssetManage_DBModel.Warehous" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_AdminPersonalInfo_UserPrivileg" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Warehous_AssetsClass" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_BorrowAndReturn_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_BorrowAndReturn_Warehous" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Warehous_Brand" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Scrap_ScrapType" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Scrap_Warehous" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Warehous_StoragePlace" ManuallyRouted="false" />
+        <AssociationConnector Association="AssetManage_DBModel.FK_Warehous_Supplier" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

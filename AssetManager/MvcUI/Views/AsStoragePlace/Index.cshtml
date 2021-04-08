@@ -1,0 +1,163 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //详情页
+    function show(id) {
+        $.ajax({
+            url: '/AsStoragePlace/SelectInfoById',
+            type: 'post',
+            dataType: 'json',
+            data: { id: id },
+            success: function (data) {
+                $("#StoragePlaceInfo").html(data.place_name);//传值
+                $("#StoragePlaceTypeInfo").html(data.place_type);
+                $("#StoragePlaceStateInfo").html(data.place_state);
+                $("#StoragePlaceRemarkInfo").html(data.place_remark);
+                layer.open({
+                    type: 1
+                            , area: ['450px', '340px']
+                            , content: $("#type-detail")
+                            , title: '资产存放地点详情'
+                            , btn: ['关闭']
+                            , btn2: function (index, layero) {
+                                //按钮【取消】的回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                            , cancel: function () {
+                                //右上角关闭回调
+
+                                //return false 开启该代码可禁止点击该按钮关闭
+                            }
+                });
+            },
+            error: function (data) {
+                alert(0);
+            }
+        });
+
+    };
+    //使用一个数据表格
+    layui.use('table', function () {
+        var table = layui.table, form = layui.form;
+
+        //数据表格实例
+        var Table = table.render({
+            elem: '#TableStoragePlace'
+          , height: 835
+           , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+               layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+           , groups: 2//只显示 2 个连续页码
+           , limit: 15 //每页显示15条数据
+           }
+          , id: 'idTest'
+          , toolbar: '#toolbarDemo'
+          , url: '/AsStoragePlace/TableLoading' //数据接口
+          , response:
+              {
+                  statusName: 'status' //规定数据状态的字段名称，默认：code
+                , statusCode: 200 //规定成功的状态码，默认：0
+                , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                , countName: 'total' //规定数据总数的字段名称，默认：count
+                , dataName: 'data' //规定数据列表的字段名称，默认：data
+              }
+          , request:
+              {
+                  pageName: 'curr' //页码的参数名称，默认：page
+                , limitName: 'nums' //每页数据量的参数名，默认：limit
+              }
+          , cols: [[ //表头
+              { field: 'place_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+            , { field: 'place_name', title: '名称', width: 650, align: 'center', templet: '#StoragePlaceNameTpl', unresize: true }
+            , { field: 'place_type', title: '类型', width: 270, align: 'center', unresize: true }
+            , { field: 'place_state', title: '状态', width: 220, align: 'center', unresize: true }
+            , { field: 'place_remark', title: '说明', width: 450, align: 'center', unresize: true }]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'Select':
+                    var name = $("#place_name").val();
+                    var state = $("#StoragePlaceState").val();
+                    Table.reload({
+                        url: '/StoragePlace/TableLoadingByName',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            name: $("#place_name").val()
+                          , state: $("#StoragePlaceState").val()
+                        }
+                    });
+                    break;
+            };
+        });
+    });
+</script>
+
+@*详情供应商信息弹出框*@
+<div id="type-detail" style="display:none" name="type-detail">
+    <br />
+    <div class="layui-form-item">
+        <label class="layui-form-label">存放地点名称：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceTypeInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceStateInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">说明：</label>
+        <div class="layui-input-block">
+            <label id="StoragePlaceRemarkInfo" class="labelInfo"></label>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+<body>
+    <div id="main">
+        <div class="title">
+            <span id="Place">当前位置：</span><span id="PersonInfoValues">存放地点</span>
+        </div>
+
+        <table id="TableStoragePlace" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="place_state" id="StoragePlaceState">
+                        <option value="0">--全部状态--</option>
+                        <option value="1">已禁用</option>
+                        <option value="2">已启用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input id="place_name" type="text" name="place_name" lay-verify="name" autocomplete="off"
+                           placeholder="请输入名称..." class="layui-input" style="width: 250px;">
+                </div>
+            </div>
+            <div class="layui-inline" style="margin-left:100px">
+                <button type="button" class="layui-btn" lay-event="Select"><i class="layui-icon layui-icon-search"></i></button>
+            </div>
+        </script>
+
+        <script type="text/html" id="StoragePlaceNameTpl">
+            <a href="#" onclick="show({{d.place_id}})" class="layui-table-link">{{ d.place_name }}</a>
+        </script>
+    </div>
+</body>

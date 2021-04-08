@@ -1,0 +1,1360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+您 Web 项目的发布/打包进程将使用此文件。您可以通过编辑此 MSBuild 文件
+来自定义该进程的行为。若要了解与此相关的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=208121。
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>D:\服务器部署</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/Antlr3.Runtime.dll">
+      <publishTime>05/23/2019 10:29:18</publishTime>
+    </File>
+    <File Include="bin/BLL.dll">
+      <publishTime>11/19/2019 10:05:58</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>05/23/2019 10:29:04</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/Model.dll">
+      <publishTime>11/19/2019 10:05:50</publishTime>
+    </File>
+    <File Include="bin/MvcUI.dll">
+      <publishTime>11/19/2019 10:08:24</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>05/23/2019 10:29:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>05/23/2019 10:29:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>05/23/2019 10:29:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>05/23/2019 10:29:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.Optimization.dll">
+      <publishTime>05/23/2019 10:29:18</publishTime>
+    </File>
+    <File Include="bin/System.Web.Providers.dll">
+      <publishTime>05/23/2019 10:29:16</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>05/23/2019 10:29:14</publishTime>
+    </File>
+    <File Include="bin/WebGrease.dll">
+      <publishTime>05/23/2019 10:29:18</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/EntityFramework.resources.dll">
+      <publishTime>05/23/2019 10:29:22</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Net.Http.Formatting.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Http.WebHost.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Mvc.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Optimization.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Providers.resources.dll">
+      <publishTime>05/23/2019 10:29:22</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.Razor.resources.dll">
+      <publishTime>05/23/2019 10:29:18</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Deployment.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.Razor.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="bin/zh-Hans/System.Web.WebPages.resources.dll">
+      <publishTime>05/23/2019 10:29:20</publishTime>
+    </File>
+    <File Include="ClassDiagram1.cd">
+      <publishTime>07/30/2019 14:10:56</publishTime>
+    </File>
+    <File Include="Content/img/skin_/close.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/close1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/close2.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/close3.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/close4.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/date.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/centerleft.png">
+      <publishTime>03/24/2014 18:01:34</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/centerright.png">
+      <publishTime>03/24/2014 18:01:46</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/downcenter.png">
+      <publishTime>03/24/2014 18:03:04</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/downleft.png">
+      <publishTime>03/24/2014 18:02:50</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/dright.png">
+      <publishTime>03/24/2014 18:03:48</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/lefttop.png">
+      <publishTime>03/24/2014 18:00:52</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/righttop.png">
+      <publishTime>03/24/2014 18:01:08</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog/topcenter.png">
+      <publishTime>03/24/2014 17:22:58</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialogbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialogbtn.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog_bottom.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog_left.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/dialog_right.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/filebg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/footerbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/footerright.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/formbtnbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/gdt.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/home.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/hoverclose.png">
+      <publishTime>03/20/2014 19:15:36</publishTime>
+    </File>
+    <File Include="Content/img/skin_/i.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico01.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico01_1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico02.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico02_1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico03.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico03_1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico04.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/ico04_1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/icon1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/icon2.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/inputbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/inputxl.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/lastnavbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/lefticon.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftlist.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftmenu.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftmenu1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftmenubg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftmenubg1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftright.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftyy.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/leftyy1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/left_tree.png">
+      <publishTime>02/11/2005 08:05:10</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginbox.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginbtn.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginbtn_active.png">
+      <publishTime>03/18/2014 13:57:32</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginlight.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginlogo.png">
+      <publishTime>10/31/2016 17:23:40</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginname.png">
+      <publishTime>11/13/2014 18:19:30</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginstyleinput.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/loginstylexl.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/mbbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/msg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/new.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/cleft.png">
+      <publishTime>03/25/2014 14:11:22</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/cright.png">
+      <publishTime>03/25/2014 14:11:40</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/dcenter.png">
+      <publishTime>03/25/2014 14:12:08</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/dleft.png">
+      <publishTime>03/25/2014 14:11:52</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/dright.png">
+      <publishTime>03/25/2014 14:12:50</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/tcenter.png">
+      <publishTime>03/25/2014 14:10:54</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/tleft.png">
+      <publishTime>03/25/2014 14:10:40</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/tright.png">
+      <publishTime>03/25/2014 14:11:06</publishTime>
+    </File>
+    <File Include="Content/img/skin_/opt/xljt.png">
+      <publishTime>03/27/2014 10:20:06</publishTime>
+    </File>
+    <File Include="Content/img/skin_/p01.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/p02.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/p03.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/p04.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/pagebg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/pageleftright.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/passwordinput.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/pic1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/pic2.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/plist.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/px.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/quit.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/radio.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/radiochecked.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/right.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/searchbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/select_hover.png">
+      <publishTime>03/29/2014 13:12:52</publishTime>
+    </File>
+    <File Include="Content/img/skin_/select_normal.png">
+      <publishTime>03/29/2014 13:12:30</publishTime>
+    </File>
+    <File Include="Content/img/skin_/skin-bg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/skinicon.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/skinxl.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/closed.png">
+      <publishTime>03/27/2014 15:09:10</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/h.png">
+      <publishTime>03/27/2014 15:06:10</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/sdown.png">
+      <publishTime>03/27/2014 15:04:20</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/sleft.png">
+      <publishTime>03/27/2014 15:04:02</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/sright.png">
+      <publishTime>03/27/2014 15:03:50</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/tabright.png">
+      <publishTime>03/27/2014 15:08:00</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/tabrighthover.png">
+      <publishTime>03/27/2014 15:08:12</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/toplist.png">
+      <publishTime>03/27/2014 15:09:32</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/yj.png">
+      <publishTime>03/27/2014 15:05:32</publishTime>
+    </File>
+    <File Include="Content/img/skin_/switch-system/yjl.png">
+      <publishTime>03/29/2014 10:39:34</publishTime>
+    </File>
+    <File Include="Content/img/skin_/systemlogo.png">
+      <publishTime>10/31/2016 17:24:22</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t01.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t02.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t03.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t04.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t05.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t06.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t07.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t08.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t09.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/t10.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/tab1.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/tab2.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/thbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/thbtm.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/toleft.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/toolbarbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/topbg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/topxl.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/toright.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/uew_icon12.png">
+      <publishTime>04/28/2014 16:13:28</publishTime>
+    </File>
+    <File Include="Content/img/skin_/uew_icon2.png">
+      <publishTime>04/28/2014 16:28:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/userface.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/userfacebg.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/userinput.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/userxl.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/skin_/yzminput.png">
+      <publishTime>03/18/2014 08:55:14</publishTime>
+    </File>
+    <File Include="Content/img/timg.jpg">
+      <publishTime>06/10/2019 20:41:42</publishTime>
+    </File>
+    <File Include="Content/img/名片.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/img/岗位管理.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/img/工号.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/img/性别.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/img/手机号.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/img/部门.png">
+      <publishTime>06/25/2019 15:14:02</publishTime>
+    </File>
+    <File Include="Content/themes/css/jquery.dialog.css">
+      <publishTime>05/29/2019 19:44:26</publishTime>
+    </File>
+    <File Include="Content/themes/css/login.css">
+      <publishTime>06/20/2019 11:19:12</publishTime>
+    </File>
+    <File Include="Content/themes/css/main.css">
+      <publishTime>06/20/2019 11:19:42</publishTime>
+    </File>
+    <File Include="Content/themes/css/nav.css">
+      <publishTime>06/05/2019 22:47:22</publishTime>
+    </File>
+    <File Include="Content/themes/css/Partial.css">
+      <publishTime>06/25/2019 18:13:30</publishTime>
+    </File>
+    <File Include="Content/themes/css/style.css">
+      <publishTime>05/29/2019 19:44:26</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/close.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/close1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/close2.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/close3.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/close4.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/date.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/centerleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/centerright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/downcenter.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/downleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/dright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/lefttop.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/righttop.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog/topcenter.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialogbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialogbtn.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog_bottom.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog_left.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/dialog_right.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/filebg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/footerbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/footerright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/formbtnbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/gdt.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/home.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/hoverclose.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/i.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico01.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico01_1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico02.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico02_1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico03.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico03_1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico04.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/ico04_1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/icon1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/icon2.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/inputbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/inputxl.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/lastnavbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/lefticon.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftlist.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftmenu.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftmenu1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftmenubg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftmenubg1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftyy.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/leftyy1.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/left_tree.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginbox.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginbtn.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginbtn_active.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginlight.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginlogo.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginname.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginstyleinput.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/loginstylexl.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/mbbg.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/msg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/new.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/cleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/cright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/dcenter.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/dleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/dright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/tcenter.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/tleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/tright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/opt/xljt.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/p01.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/p02.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/p03.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/p04.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/pagebg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/pageleftright.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/passwordinput.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/pic1.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/pic2.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/plist.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/px.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/quit.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/radio.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/radiochecked.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/right.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/searchbg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/select_hover.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/select_normal.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/skin-bg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/skinicon.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/skinxl.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/closed.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/h.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/sdown.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/sleft.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/sright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/tabright.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/tabrighthover.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/toplist.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/yj.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/switch-system/yjl.png">
+      <publishTime>05/30/2019 09:39:04</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/systemlogo.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t01.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t02.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t03.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t04.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t05.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t06.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t07.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t08.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t09.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/t10.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/tab1.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/tab2.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/thbg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/thbtm.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/toleft.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/toolbarbg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/topbg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/topxl.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/toright.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/uew_icon12.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/uew_icon2.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/userface.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/userfacebg.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/userinput.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/userxl.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/skin_/yzminput.png">
+      <publishTime>05/30/2019 09:39:06</publishTime>
+    </File>
+    <File Include="Content/themes/img/timg.jpg">
+      <publishTime>06/10/2019 20:41:44</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>05/23/2019 10:29:00</publishTime>
+    </File>
+    <File Include="layui/css/layui.css">
+      <publishTime>06/19/2019 14:29:44</publishTime>
+    </File>
+    <File Include="layui/css/layui.mobile.css">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="layui/css/modules/code.css">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/css/modules/laydate/default/laydate.css">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/icon-ext.png">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/icon.png">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/layer.css">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/loading-0.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/loading-1.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/css/modules/layer/default/loading-2.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/font/iconfont.eot">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="layui/font/iconfont.svg">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="layui/font/iconfont.ttf">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/font/iconfont.woff">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/font/iconfont.woff2">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/0.gif">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="layui/images/face/1.gif">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/images/face/10.gif">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/images/face/11.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/12.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/13.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/14.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/15.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/16.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/17.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/18.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/19.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/2.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/20.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/21.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/22.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/23.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/24.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/25.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/26.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/27.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/28.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/29.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/3.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/30.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/31.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/32.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/33.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/34.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/35.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/36.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/37.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/38.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/39.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/4.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/40.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/41.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/42.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/43.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/44.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/45.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/46.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/47.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/48.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/49.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/5.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/50.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/51.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/52.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/53.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/54.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/55.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/56.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/57.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/58.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/59.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/6.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/60.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/61.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/62.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/63.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/64.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/65.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/66.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/67.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/68.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/69.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/7.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/70.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/71.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/8.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/images/face/9.gif">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/carousel.js">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="layui/lay/modules/code.js">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/lay/modules/colorpicker.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/element.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/flow.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/form.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/jquery.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/laydate.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/layedit.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/layer.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/laypage.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/laytpl.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/mobile.js">
+      <publishTime>06/04/2019 14:14:10</publishTime>
+    </File>
+    <File Include="layui/lay/modules/rate.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/slider.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/table.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/transfer.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/tree.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/upload.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/lay/modules/util.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/layui.all.js">
+      <publishTime>06/04/2019 14:14:12</publishTime>
+    </File>
+    <File Include="layui/layui.js">
+      <publishTime>06/04/2019 14:14:08</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>05/23/2019 10:29:22</publishTime>
+    </File>
+    <File Include="Scripts/core.js">
+      <publishTime>05/29/2019 20:45:28</publishTime>
+    </File>
+    <File Include="Scripts/jquery-1.10.2.js">
+      <publishTime>06/12/2019 22:11:18</publishTime>
+    </File>
+    <File Include="Scripts/jquery.dialog.js">
+      <publishTime>05/29/2019 20:45:28</publishTime>
+    </File>
+    <File Include="Scripts/jquery.select.js">
+      <publishTime>05/30/2019 19:47:36</publishTime>
+    </File>
+    <File Include="Scripts/jquery.unobtrusive-ajax.min.js">
+      <publishTime>05/31/2019 16:24:06</publishTime>
+    </File>
+    <File Include="Scripts/Menu.js">
+      <publishTime>05/29/2019 20:01:50</publishTime>
+    </File>
+    <File Include="Scripts/nav.js">
+      <publishTime>05/29/2019 20:01:50</publishTime>
+    </File>
+    <File Include="Views/Account/Login.cshtml">
+      <publishTime>06/25/2019 19:02:36</publishTime>
+    </File>
+    <File Include="Views/AsAssetsClass/Index.cshtml">
+      <publishTime>06/19/2019 09:17:42</publishTime>
+    </File>
+    <File Include="Views/AsBrand/Index.cshtml">
+      <publishTime>06/19/2019 09:34:08</publishTime>
+    </File>
+    <File Include="Views/AsDepartment/Index.cshtml">
+      <publishTime>06/19/2019 09:51:02</publishTime>
+    </File>
+    <File Include="Views/AsHome/Index.cshtml">
+      <publishTime>06/23/2019 18:08:06</publishTime>
+    </File>
+    <File Include="Views/AsScrapType/Index.cshtml">
+      <publishTime>06/19/2019 09:36:48</publishTime>
+    </File>
+    <File Include="Views/AssetsClass/Index.cshtml">
+      <publishTime>06/19/2019 13:58:26</publishTime>
+    </File>
+    <File Include="Views/AsStoragePlace/Index.cshtml">
+      <publishTime>06/24/2019 18:46:16</publishTime>
+    </File>
+    <File Include="Views/AsSupplier/Index.cshtml">
+      <publishTime>06/24/2019 18:59:22</publishTime>
+    </File>
+    <File Include="Views/BorrowAndReturn/BorrowReg.cshtml">
+      <publishTime>06/22/2019 23:05:14</publishTime>
+    </File>
+    <File Include="Views/BorrowAndReturn/Index.cshtml">
+      <publishTime>06/24/2019 22:56:26</publishTime>
+    </File>
+    <File Include="Views/Brand/Index.cshtml">
+      <publishTime>06/19/2019 13:59:02</publishTime>
+    </File>
+    <File Include="Views/Department/Index.cshtml">
+      <publishTime>06/19/2019 14:00:14</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>06/18/2019 15:04:18</publishTime>
+    </File>
+    <File Include="Views/Home/Partial_PersonInfo.cshtml">
+      <publishTime>06/25/2019 22:18:32</publishTime>
+    </File>
+    <File Include="Views/Home/Partial_Welcome.cshtml">
+      <publishTime>06/17/2019 21:40:36</publishTime>
+    </File>
+    <File Include="Views/Scrap/Index.cshtml">
+      <publishTime>06/25/2019 00:35:04</publishTime>
+    </File>
+    <File Include="Views/Scrap/ScrapReg.cshtml">
+      <publishTime>06/22/2019 23:55:08</publishTime>
+    </File>
+    <File Include="Views/ScrapType/Index.cshtml">
+      <publishTime>06/19/2019 13:59:16</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>05/23/2019 10:29:00</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>06/25/2019 21:56:08</publishTime>
+    </File>
+    <File Include="Views/StoragePlace/Index.cshtml">
+      <publishTime>06/24/2019 18:07:36</publishTime>
+    </File>
+    <File Include="Views/Supplier/Index.cshtml">
+      <publishTime>07/19/2019 16:34:08</publishTime>
+    </File>
+    <File Include="Views/Warehous/Index.cshtml">
+      <publishTime>06/24/2019 19:05:50</publishTime>
+    </File>
+    <File Include="Views/Warehous/WarehousReg.cshtml">
+      <publishTime>06/24/2019 23:20:20</publishTime>
+    </File>
+    <File Include="Views/Warehous/WarehousUpdate.cshtml">
+      <publishTime>06/25/2019 00:24:00</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>05/23/2019 10:29:00</publishTime>
+    </File>
+    <File Include="Views/_ViewStart.cshtml">
+      <publishTime>05/23/2019 10:29:00</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>11/19/2019 10:06:04</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

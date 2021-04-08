@@ -1,0 +1,261 @@
+﻿@Scripts.Render("~/bundles/jquery")
+@Styles.Render("~/Content/themes/css/Partial")
+@Styles.Render("~/Content/themes/css/layui")
+@Scripts.Render("~/bundles/layui")
+
+<script>
+    //时间
+    function getFDate(date) {
+        var d = eval('new ' + date.substr(1, date.length - 2));
+
+        var ar_date = [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+
+        for (var i = 0; i < ar_date.length; i++) ar_date[i] = dFormat(ar_date[i]);
+        return ar_date.join('-');
+    }
+    function dFormat(i) {
+        return i < 10 ? "0" + i.toString() : i;
+    }
+    //使用一个数据表格
+    layui.use(['table', 'form'], function () {
+        var table = layui.table, form = layui.form;
+        //数据表格实例
+        var Table = table.render({
+            elem: '#TableScrap'
+           , height: 835
+            , page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next', 'skip'] //自定义分页布局
+            , groups: 2//只显示 2 个连续页码
+            , limit: 15 //每页显示15条数据
+            }
+           , id: 'idTest'
+           , toolbar: '#toolbarDemo'
+           , url: '/Scrap/TableLoading' //数据接口
+           , response:
+               {
+                   statusName: 'status' //规定数据状态的字段名称，默认：code
+                 , statusCode: 200 //规定成功的状态码，默认：0
+                 , msgName: 'hint' //规定状态信息的字段名称，默认：msg
+                 , countName: 'total' //规定数据总数的字段名称，默认：count
+                 , dataName: 'data' //规定数据列表的字段名称，默认：data
+               }
+           , request:
+               {
+                   pageName: 'curr' //页码的参数名称，默认：page
+                 , limitName: 'nums' //每页数据量的参数名，默认：limit
+               }
+           , cols: [[ //表头
+               { field: 'scr_id', title: '序号', width: 100, sort: true, fixed: 'left', align: 'center', unresize: true }
+             , { field: 'scr_no', title: '资产编码', width: 200, align: 'center', unresize: true }
+             , { field: 'scr_name', title: '资产名称', width: 200, align: 'center', unresize: true }
+             , { field: 'scr_class', title: '资产类别', width: 200, align: 'center', unresize: true }
+             , { field: 'scr_time', title: '报废日期', width: 200, align: 'center', unresize: true, templet: function (d) { return getFDate(d.scr_time) } }
+             , { field: 'scr_type', title: '报废方式', width: 200, align: 'center', unresize: true }
+             , { field: 'scr_reason', title: '报废原因', width: 280, align: 'center', unresize: true }
+             , { field: 'scr_state', title: '报废状态', width: 150, align: 'center', unresize: true }
+             , { title: '操作', toolbar: '#barDemo', width: 170, align: 'center', unresize: true }
+           ]]
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //入库登记事件
+                case 'Add':
+                    location.href = "ScrapReg";
+                    break;
+                case 'Select':
+                    var asclass = $("#ScrapClass1").val();
+                    var type = $("#ScrapType1").val();
+                    var nameno = $("#ScrapNameNo1").val();
+                    Table.reload({
+                        url: '/Scrap/TableLoadingByName',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            asclass: $("#ScrapClass1").val()
+                          , type: $("#ScrapType1").val()
+                            , nameno: $("#ScrapNameNo1").val()
+                        }
+                    });
+                    break;
+            };
+        });
+
+
+        //监听行工具事件
+        table.on('tool(test)', function (obj) {
+            var $ = layui.jquery, layer = layui.layer, data = obj.data;
+
+            //详情事件
+            if (obj.event === 'edit') {
+                //实例一个弹出层
+                layer.open({
+                    type: 1
+                , area: ['900px', 'px']
+                , content: $("#type-detail")
+                , title: '资产报废详情'
+                , btn: ['关闭']
+                , success: function (dom, index) {
+                    //查询资产/借用信息
+                    $.ajax({
+                        url: '/Scrap/SelectInfoById',
+                        type: 'post',
+                        dataType: 'json',
+                        data: { id: data.scr_id },
+                        success: function (data) {
+                            $("#WarehousName").html(data.bandr_name);//传值资产信息
+                            $("#WarehousNo").html(data.ware_no);
+                            $("#WarehousClass").html(data.ware_class);
+                            $("#WarehousSup").html(data.ware_sup);
+                            $("#WarehousBrand").html(data.ware_brand);
+                            $("#WarehousAddTime").html(getFDate(data.ware_addtime));
+
+                            $("#ScrapType").html(data.scr_name);//传值报废信息
+                            $("#ScrapTime").html(getFDate(data.scr_time));
+                            $("#ScrapReson").html(data.scr_reason);
+                        },
+                        error: function (data) {
+                            alert("传值失败");
+                        }
+                    });
+                }
+                , btn2: function (index, layero) {
+                    //按钮【取消】的回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                , cancel: function () {
+                    //右上角关闭回调
+
+                    //return false 开启该代码可禁止点击该按钮关闭
+                }
+                });
+            }
+        });
+    });
+</script>
+
+@*报废详情弹出框*@
+<div id="type-detail" style="display:none" name="type-detail">
+    <br />
+    <h3 class="borrowInfo">资产信息</h3>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产名称：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousName" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">资产编码：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousNo" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">资产类型：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousClass" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">供应商：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousSup" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">品牌：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousBrand" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">入库日期：</label>
+            <div class="layui-input-inline">
+                <label id="WarehousAddTime" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="borrowInfo">报废信息</h3>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">报废方式：</label>
+            <div class="layui-input-inline">
+                <label id="ScrapType" class="labelInfo"></label>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">报废日期：</label>
+            <div class="layui-input-inline">
+                <label id="ScrapTime" class="labelInfo"></label>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">报废原因：</label>
+        <div class="layui-input-block">
+            <label id="ScrapReson" class="labelInfo"></label>
+        </div>
+    </div>
+    <hr class="layui-bg-gray">
+</div>
+
+<div id="main">
+    <div class="title">
+        <span id="Place">当前位置：</span><span id="PersonInfoValues">资产报废</span>
+    </div>
+
+    <table id="TableScrap" lay-filter="test"></table>
+
+    <script type="text/html" id="toolbarDemo">
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="sup_state" id="ScrapType1">
+                        <option value="">--报废方式--</option>
+                        @foreach (var item in ViewBag.ScrapType)
+                        {
+                            <option value="@item.scrap_name">@item.scrap_name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <select name="sup_state" id="ScrapClass1">
+                        <option value="">--资产类别--</option>
+                        @foreach (var item in ViewBag.AssetsClass)
+                        {
+                            <option value="@item.AsClass_name">@item.AsClass_name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input id="ScrapNameNo1" type="text" name="sup_name" lay-verify="name" autocomplete="off"
+                           placeholder="资产编码/名称" class="layui-input" style="width: 250px;">
+                </div>
+            </div>
+            <div class="layui-inline" style="margin-left:100px">
+                <button type="button" class="layui-btn" lay-event="Select"><i class="layui-icon layui-icon-search"></i></button>
+            </div>
+        <div class="layui-btn-container layui-inline">
+            <button class="layui-btn layui-btn-sm" lay-event="Add" style="margin-left: 862px;">报废登记</button>
+        </div>
+
+    </script>
+
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">查看</a>
+    </script>
+</div>
